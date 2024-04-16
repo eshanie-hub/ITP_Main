@@ -62,14 +62,15 @@ const handleForm = (e) => {
 
   return (
     <>
-    <section style={{backgroundColor: "#9A616D", height: "92.2vh"}}>
-    <div class="container py-5">
+    <section class="bg-image" >
+      <img src={require("../../assets/loginbg.png")} style={{height: "92.2vh", position: "relative"}} width="100%" alt=""/>
+    <div class="mask container py-5" style={{position: "absolute"}} >
       <div class="row d-flex justify-content-center align-items-center">
         <div class="col col-xl-8">
           <div class="card" style={{borderRadius: "1rem"}}>
             <div class="row g-0">
               <div class="col-md-6 col-lg-5 d-none d-md-block">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                <img src={require("../../assets/login.jpg")}
                   alt="login form" class="img-fluid" style={{borderRadius: "1rem 0 0 1rem"}} />
               </div>
               <div class="col-md-6 col-lg-7 d-flex align-items-center">
@@ -78,7 +79,7 @@ const handleForm = (e) => {
                   <form>
   
                     <div class="d-flex align-items-center mb-3 pb-1">
-                      <i class="fas fa-cubes fa-2x me-3" style={{color: "#ff6219"}}></i>
+                      <i class="fas fa-cubes fa-2x me-3" style={{color: "#e2dad6"}}></i>
                       <span class="h1 fw-bold mb-0">Logo</span>
                     </div>
   
