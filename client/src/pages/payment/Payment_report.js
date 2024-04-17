@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Header from '../../component/Header'
-import Chart from "chart.js/auto";
+
 import {
   ResponsiveContainer,
   ComposedChart,
