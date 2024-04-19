@@ -41,10 +41,11 @@ import AddOrder from './pages/order_placement/AddOrder.js'
 //delievery
 import SalesExecutiveDelivery from './pages/delivery/SalesExecutive_view.js'
 import OperatorDelivery from './pages/delivery/Operator_view.js'
-import DeliveryReport from './pages/delivery/report.js'
+import DeliveryReport from './pages/delivery/Delivery_report.js'
 import EditDelivery from './pages/delivery/EditDelivery.js'
 import FactoryDelivery from './pages/delivery/FactoryDelivery_view.js'
 import AddDelivery from './pages/delivery/AddDelivery.js'
+
 
 //employee manage
 import OperatorEmployee from './pages/employee_manage/Operator_view.js'
@@ -68,6 +69,7 @@ import AddDistributor from './pages/distributor/AddDistributor.js'
 import EditDistributor from './pages/distributor/EditDistributor.js'
 import CustomerReport from './pages/customer/CustomerReport.js'
 import EditCustomer from './pages/customer/EditCustomer.js'
+
 const App = () => {
 
   const isAuth = Boolean(useSelector((state) => state.token));
@@ -86,10 +88,14 @@ const App = () => {
             <Route path="/pages/employee_manage/view" element={isAuth ? <EmployeeManage /> : <Home /> }></Route>
             <Route path="/pages/delivery/view" element={isAuth ?<Delivery /> :  <Home /> }></Route>
 
+
             {/* Customer */}
             <Route path="/pages/customer/view" element={isAuth ? <Customer /> : <Home /> }></Route>
             <Route path="/pages/customer/report" element={isAuth ? <CustomerReport /> : <Home /> }></Route>
             <Route path="/pages/customer/edit/:id" element={isAuth ? <EditCustomer /> : <Home /> }></Route>
+
+            <Route path="/pages/customer/view" element={isAuth ? <Customer /> : <Home /> }></Route>
+
             
             {/* Inventory Routes */}
             <Route path="/pages/inventory/view" element={isAuth ? <Inventory /> : <Home /> }></Route>
@@ -123,9 +129,10 @@ const App = () => {
             <Route path="/pages/delivery/SalesExecutive_view" element={isAuth ? <SalesExecutiveDelivery /> : <Home /> }></Route>
             <Route path="/pages/delivery/Operator_view" element={isAuth ? <OperatorDelivery /> : <Home /> }></Route>
             <Route path="/pages/delivery/FactoryDelivery_view" element={isAuth ? <FactoryDelivery /> : <Home /> }></Route>
-            <Route path="/pages/delivery/report" element={isAuth ? <DeliveryReport /> : <Home /> }></Route>
+            <Route path="/pages/delivery/Delivery_report" element={isAuth ? <DeliveryReport /> : <Home /> }></Route>
             <Route path="/pages/delivery/edit/:id" element={isAuth ? <EditDelivery /> : <Home /> }></Route>
             <Route path="/pages/delivery/add" element={isAuth ? <AddDelivery /> : <Home /> }></Route>
+
 
             {/* Employee */}
             <Route path="/pages/employee_manage/Operator_view" element={isAuth ? <OperatorEmployee /> : <Home /> }></Route>
@@ -148,6 +155,10 @@ const App = () => {
             <Route path="/pages/distributor/Assistant_view" element={isAuth ? <AssistantDistributor /> : <Home /> }></Route>
             <Route path="/pages/distributor/add" element={isAuth ? <AddDistributor /> : <Home /> }></Route>
             <Route path="/pages/distributor/edit/:id" element={isAuth ? <EditDistributor /> : <Home /> }></Route>
+
+
+            <Route path="/pages/distributor/view" element={isAuth ? <Distributor /> : <Home /> }></Route>
+            
 
             <Route path="/pages/employee_salary/view" element={isAuth ? <Salary /> : <Home /> }></Route>
             
