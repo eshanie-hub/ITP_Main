@@ -41,7 +41,7 @@ useEffect(() => {
                     <th scope="col">phoneNo</th>
                     <th scope="col">creditLimit</th>
                     <th scope="col">agreementStatus</th>
-                    <th scope="col">date Count</th>
+                    <th scope="col">date</th>
                     <th scope="col">Status</th>
                     </tr>
                 </thead>
