@@ -7,7 +7,6 @@ const AddDelivery = () => {
   const navigate = useNavigate();
     const [state, setState] = useState({
       SalesExecutiveName: "",
-        itemName: "",
         OperatorName: "",
         OrderNo: "",
         Amount: "",
@@ -19,8 +18,8 @@ const AddDelivery = () => {
     
       const validateValues = (inputValues) => {
         let errors = {};
-        if (inputValues.itemName.length < 4) {
-          errors.itemName = "itemNo is too short";
+        if (inputValues.SalesExecutiveName.length < 4) {
+          errors.SalesExecutiveName = "Name is too short";
         }
         if (inputValues.OperatorName.length < 1) {
           errors.OperatorName = "Operator name is too short";
@@ -40,10 +39,21 @@ const AddDelivery = () => {
     
       const handleChange = (e) =>{
         const {name, value} = e.target;
-    
-        setState({...state,[e.target.name]:e.target.value});
-        setErrors(validateValues(state));
-      }
+        let newValue = value;
+
+  // Perform specific validations based on the input field
+  if (name === "SalesExecutiveName" || name === "OperatorName" || name === "DeliveryStatus") {
+    // Allow only alphabetic characters
+    newValue = value.replace(/[^A-Za-z]/ig, "");
+  } else if (name === "OrderNo" || name === "Amount") {
+    // Allow only integers
+    newValue = value.replace(/\D/g, "");
+  }
+
+        //setState({...state,[e.target.name]:e.target.value});
+        setState({...state, [name]: newValue});
+  setErrors(validateValues({...state, [name]: newValue}));
+}
     
       const onsubmit = (e) => {
         e.preventDefault();
@@ -98,10 +108,12 @@ const AddDelivery = () => {
         type="text"
         name="SalesExecutiveName" 
         className='form-control'
-        placeholder="Enter name"
+        placeholder="Enter name only letters" 
         value={state.SalesExecutiveName}
         onChange={handleChange}
         />
+       
+        
         {errors.SalesExecutiveName && (
           <div class="text-danger mt-2">
             SalesExecutiveName should have 4 characters
