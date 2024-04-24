@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Header from '../../component/Header';
 import {
   ResponsiveContainer,
@@ -13,21 +13,44 @@ import {
   Legend,
 } from 'recharts';
 import axios from 'axios';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
 
 const Delivery_report = () => {
-  const [deliveryData, setDeliveryData] = useState([]);
+  const [state, setState] = useState({
+    delievery: []
+  })
 
   useEffect(() => {
     axios.get("http://localhost:8000/delievery/")
       .then(res => {
         if (res.data) {
-          setDeliveryData(res.data);
+          setState({
+            delievery:res.data
+          })
         }
       })
-      .catch(error => {
-        console.error('Error fetching delivery data:', error);
-      });
-  }, []); // Empty dependency array to execute once on component mount
+      
+  }, [state]); 
+
+  const pdfRef = useRef();
+  const downloadPDF = () => {
+    const input = pdfRef.current;
+    html2canvas(input).then((Canvas) => {
+      const imgData = Canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4', true);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = Canvas.width;
+      const imgHeight = Canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 30;
+      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      pdf.save('deliveryReport.pdf');
+    });
+  };
 
   return (
     <>
@@ -37,13 +60,18 @@ const Delivery_report = () => {
       <div className="container-fluid">
         <div className="row flex-nowrap">
           <div className="col py-3">
-            {deliveryData.length > 0 && (
+          <div ref={pdfRef}>
+        <h2 class="my-5 text-center">Delivery schedule management report</h2>
+
+            {state.delievery && 
+            state.delievery.length> 0 &&(
               <div style={{ width: '100%', height: 300 }}>
+                
                 <ResponsiveContainer>
                   <ComposedChart
                     width={500}
                     height={400}
-                    data={deliveryData}
+                    data={state.delievery}
                     margin={{
                       top: 20,
                       right: 20,
@@ -62,15 +90,18 @@ const Delivery_report = () => {
                 </ResponsiveContainer>
               </div>
             )}
-
-            <button className="btn btn-primary mt-5" type="submit">
-              <a href="./Operator_view" style={{textDecoration: 'none', color: 'white' }}> Back </a>
+            </div>
+            <div className='mt-5'>
+            <button className='btn me-2' style={{backgroundColor:"#c1b688"}} type='submit'>
+            <a href="./Operator_view"  style={{textDecoration: 'none', color:'black'}}>Back</a>
             </button>
+            <button className='btn' style={{backgroundColor:"#c1b688"}} onClick={downloadPDF}>Download PDF</button>
           </div>
+        </div>
         </div>
       </div>
     </>
-  );
+  )
 }
 
 export default Delivery_report;

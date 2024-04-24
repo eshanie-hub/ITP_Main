@@ -58,7 +58,7 @@ const FactoryView = () => {
                     <td>{inventory.reorderPoint}</td>
                     <td>
                     <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-success btn-sm">
+                    <button type="button" class="btn btn-sm" style={{backgroundColor: "#596584 "}} >
                         <a href={`/pages/inventory/edit/${inventory._id}`} style={{textDecoration: 'none', color:'white'}}>
                             update
                         </a>

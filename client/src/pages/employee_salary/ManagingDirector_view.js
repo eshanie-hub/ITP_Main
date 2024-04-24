@@ -21,7 +21,7 @@ useEffect(() => {
   return (
     <>
     <div class="col">
-        <Header dashboard={"Employee Salary System"} setSearch={setSearch}/>
+        <Header dashboard={"Employee Salary Management"} setSearch={setSearch}/>
     </div>
     <div class="container-fluid">
     <div class="row flex-nowrap">
@@ -54,7 +54,7 @@ useEffect(() => {
                     <td>{salary.NetSalary}</td>
                     <td>
                     <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-success btn-sm">
+                    <button type="button" class="btn btn-sm" style={{backgroundColor: "#596584 "}} >
                         <a href={`/pages/employee_salary/edit/${salary._id}`} style={{textDecoration: 'none', color:'white'}}>
                             update
                         </a>
@@ -65,8 +65,8 @@ useEffect(() => {
                 ))}
                 </tbody>
                 </table>
-        <button className='btn btn-primary mt-5' type='submit'>
-            <a href="./report"  style={{textDecoration: 'none', color:'white'}}>Report</a>
+        <button className='btn mt-5' style={{backgroundColor: "#c1b688"}} type='submit'>
+            <a href="./report"  style={{textDecoration: 'none', color:'black'}}>Report</a>
       </button>
         </div>
         </div>

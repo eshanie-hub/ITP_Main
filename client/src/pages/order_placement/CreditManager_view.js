@@ -61,7 +61,7 @@ useEffect(() => {
                     
                     <td>
                     <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-success btn-sm">
+                    <button type="button" class="btn btn-sm" style={{backgroundColor: "#596584 "}} >
                         <a href={`/pages/order_placement/edit/${order_placement._id}`} style={{textDecoration: 'none', color:'white'}}>
                             update
                         </a>

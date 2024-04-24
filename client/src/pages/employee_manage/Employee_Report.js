@@ -1,9 +1,11 @@
-import React,{ useEffect, useState } from 'react'
+import React,{ useEffect, useState,useRef } from 'react'
 import Header from '../../component/Header'
 import { PieChart, Pie} from 'recharts';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import axios from 'axios';
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { LineChart, Line } from 'recharts';
+
 
 const Employee_Report = () => {
 
@@ -20,6 +22,25 @@ const Employee_Report = () => {
     })
     
 }, [state]);
+
+//Report download function
+const pdfRef = useRef();
+const downloadPDF = () => {
+  const input = pdfRef.current;
+  html2canvas(input).then((Canvas) => {
+    const imgData = Canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4', true);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const imgWidth = Canvas.width;
+    const imgHeight = Canvas.height;
+    const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+    const imgX = (pdfWidth - imgWidth * ratio) / 2;
+    const imgY = 30;
+    pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+    pdf.save('employeeReport.pdf');
+  });
+};
 
 // Array of colors for each department
  const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7f0e', '#ff5500', '#8dd1e1', '#82ca9d']
@@ -70,11 +91,13 @@ const data = Object.keys(monthCount).map((month) => ({
     <div class="container-fluid">
       <div class="row flex-nowrap">
         <div class="col py-3">
-            Employee manager Report
+
+            <div ref={pdfRef}>
+        <h2 class="my-5 text-center">Employee Management Report</h2>
 
             {state.empDetails && state.empDetails.length > 0 && (
           <div>
-            <BarChart
+            <BarChart 
           width={500}
           height={300}
           data={departmentData}
@@ -93,7 +116,7 @@ const data = Object.keys(monthCount).map((month) => ({
 
      {state.empDetails && state.empDetails.length > 0 && (
               <div>
-                <PieChart width={500} height={300}>
+                <PieChart  width={500} height={300}>
                   <Pie
                     dataKey="EmployeeCount"
                     nameKey= "Department"
@@ -111,31 +134,19 @@ const data = Object.keys(monthCount).map((month) => ({
               </div>
             )}
 
-          {state.empDetails && state.empDetails.length > 0 && (
-              <div>
-        <LineChart
-          width={500}
-          height={300}
-          data={data}
-          
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="Month"/>
-          <YAxis  />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="EmployeeCount" stroke="#82ca9d" activeDot={{ r: 8 }} />
-        </LineChart>
-        </div>
-      )}
-          
+          </div>
          
-            <button className='btn btn-primary mt-5' type='submit'>
-            <a href="./ManagingDirector_view"  style={{textDecoration: 'none', color:'white'}}>Back</a>
+            <button className='btn btn-primary mt-5' style={{backgroundColor: "#c1b688 "}}
+             type='submit'>
+            <a href="./ManagingDirector_view" style={{backgroundColor: "#c1b688 ", textDecoration: 'none', color:'white'}}>Back</a>
             </button>
+            <br/> <br/> <br/>
+            <button className='btn btn-primary' style={{backgroundColor: "#c1b688 "}}
+             onClick={downloadPDF}>Download PDF</button>
         </div>
         </div>
       </div>
+      
     </>
   )
 }

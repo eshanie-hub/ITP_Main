@@ -218,7 +218,7 @@ const EditOrder = () => {
         />
         {errors.amount && (
           <div class="text-danger mt-2">
-            amount should have 4 characters
+            amount can't be null
           </div>)}
     </div>
     <div class="col">
@@ -233,7 +233,7 @@ const EditOrder = () => {
         />
         {errors.date && (
           <div class="text-danger mt-2">
-            date should have 4 characters
+            date can't be null
           </div>)}
     </div>
     <div class="col">
@@ -248,12 +248,12 @@ const EditOrder = () => {
         />
         {errors.orderStatus && (
           <div class="text-danger mt-2">
-            orderStatus should have 4 characters
+            orderStatus can't be null
           </div>)}
     </div>
 
 
-  <button className='btn btn-success mt-5' type='submit' onClick={onsubmit}>
+  <button className='btn mt-5' style={{backgroundColor: "#c1b688"}} type='submit' onClick={onsubmit}>
          Save
       </button>
 </div>

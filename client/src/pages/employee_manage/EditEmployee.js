@@ -274,7 +274,8 @@ const EditEmployee = () => {
           </div>)}
     </div>
 
-  <button className='btn btn-success mt-5' type='submit' onClick={onsubmit}>
+  <button className='btn btn-success mt-5'  style={{backgroundColor: "#596584 "}}
+  type='submit' onClick={onsubmit}>
          Save
       </button>
       </div>
