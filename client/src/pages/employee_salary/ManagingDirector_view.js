@@ -21,7 +21,7 @@ useEffect(() => {
   return (
     <>
     <div class="col">
-        <Header dashboard={"Employee Salary System"} setSearch={setSearch}/>
+        <Header dashboard={"Employee Salary Management"} setSearch={setSearch}/>
     </div>
     <div class="container-fluid">
     <div class="row flex-nowrap">

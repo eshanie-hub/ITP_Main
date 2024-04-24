@@ -7,7 +7,7 @@ const Operator_view = () => {
     <>
       <View />
       <button className='btn btn-primary mt-5' type='submit'>
-            <a href="./report"  style={{textDecoration: 'none', color:'white'}}>Report</a>
+            <a href="./Delivery_report"  style={{textDecoration: 'none', color:'white'}}>Report</a>
       </button>
     </>
   )

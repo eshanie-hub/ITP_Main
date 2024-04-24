@@ -208,7 +208,7 @@ const EditDistributor = () => {
     <div class="col">
     <label class="form-label">date</label>
         <input 
-        type="text"
+        type="date"
         name="date" 
         className='form-control'
         placeholder="Enter date of the post"

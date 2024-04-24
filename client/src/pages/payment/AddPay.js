@@ -135,7 +135,7 @@ const AddPay = () => {
         name="Date" 
         className='form-control'
         placeholder="Enter  Date of the post"
-        value={state. Date}
+        value={state.Date}
         onChange={handleChange}
         />
     {errors.Date && (
@@ -178,7 +178,7 @@ const AddPay = () => {
     </div>
    
 
-  <button className='btn btn-success mt-5' type='submit' onClick={onsubmit}>
+  <button className='btn btn-success mt-5' type='submit' onClick={handleSubmit}>
          Save
       </button>
 </div>
