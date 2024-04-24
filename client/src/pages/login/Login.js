@@ -9,6 +9,7 @@ import Manager from '../../component/sideMenus/Operator'
 
 const Login = () => {
   const dispatch = useDispatch();
+  
   const [state, setState ] = useState({
     emp_id: "",
     password: "",
@@ -35,28 +36,37 @@ const handleForm = (e) => {
 
     dispatch(setMenu({menuType: data.emp_id}))
 
-    if(state.emp_id ==="op" && state.password ==="op"){
+    if(state.emp_id.startsWith("op") && /^\d{4}$/.test(state.emp_id.slice(2))  &&state.password.length === 6 ){
       navigate("../../pages/employee_manage/Operator_view");
+      alert("Login Successfully");
     }
-    else if(state.emp_id ==="fa" && state.password ==="fa"){
+    else if(state.emp_id.startsWith("fa") && /^\d{4}$/.test(state.emp_id.slice(2)) &&state.password.length === 6){
       navigate("../../pages/inventory/Factory_view");
+      alert("Login Successfully");
     }
-    else if(state.emp_id ==="as" && state.password ==="as"){
+    else if(state.emp_id.startsWith("as") && /^\d{4}$/.test(state.emp_id.slice(2)) &&state.password.length === 6){
       navigate("../../pages/payment/Assistant");
+      alert("Login Successfully");
     }
-    else if(state.emp_id ==="se" && state.password ==="se"){
+    else if(state.emp_id.startsWith("se") && /^\d{4}$/.test(state.emp_id.slice(2)) &&state.password.length === 6){
       navigate("../../pages/delivery/SalesExecutive_view");
+      alert("Login Successfully");
     }
-    else if(state.emp_id ==="md" && state.password ==="md"){
+    else if(state.emp_id.startsWith("md") && /^\d{4}$/.test(state.emp_id.slice(2)) &&state.password.length === 6){
       navigate("../../pages/employee_manage/ManagingDirector_view");
+      alert("Login Successfully");
     }
-    else if(state.emp_id ==="cm" && state.password ==="cm"){
+    else if(state.emp_id.startsWith("cm") && /^\d{4}$/.test(state.emp_id.slice(2)) &&state.password.length === 6){
       navigate("../../pages/employee_salary/CreditManager_view");
+      alert("Login Successfully");
     }
     else {
       console.log("error")
     }
+
   }
+
+  
 }
 
 
@@ -108,8 +118,8 @@ const handleForm = (e) => {
       </div>
     </div>
   </section>
-       
-  </>
+       
+  </>
   )
 }
 
