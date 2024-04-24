@@ -102,12 +102,13 @@ const App = () => {
             <Route path="/pages/inventory/edit/:id" element={isAuth ? <EditItem /> : <Home /> }></Route>
 
             {/* Payment */}
-            <Route path="/pages/payment/add" element={isAuth ? <PaymentAdd /> : <Home /> }></Route>
-            <Route path="/pages/payment/edit/:id" element={isAuth ? <EditPay /> : <Home /> }></Route>
+            <Route path="/pages/payment/add/:id" element={isAuth ? <PaymentAdd /> : <Home /> }></Route>        
             <Route path="/pages/payment/report" element={isAuth ? <PaymentReport /> : <Home /> }></Route>
-
+            <Route path="/pages/payment/edit/:id" element={isAuth ? <EditPay /> : <Home /> }></Route>
             <Route path="/pages/payment/CreditManager_view" element={isAuth ? <CreditManagerPayment /> : <Home /> }></Route>
             <Route path="/pages/payment/Assistant" element={isAuth ? <AssistantPayment /> : <Home /> }></Route>
+            
+            
 
             {/* Order */}
             <Route path="/pages/order_placement/view" element={isAuth ? <Order /> : <Home /> }></Route>
