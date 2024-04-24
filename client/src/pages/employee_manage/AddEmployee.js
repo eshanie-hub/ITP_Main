@@ -2,15 +2,10 @@ import React, { useState } from 'react'
 import Header from '../../component/Header';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-//import { format } from "date-fns";
-
-
-
 
 const AddEmployee = () => {
   const navigate = useNavigate();
-  // const currentDate = new Date().toISOString();
-  //const currentDate = format(ISODate(), 'yyyy-MM-dd'); // Get current date
+  
     const [state, setState] = useState({
       empID:"", 
       name:"", 
@@ -30,7 +25,8 @@ const AddEmployee = () => {
         if (inputValues.empID.length < 6) {
           errors.empID = "EmpID should have 6 characters";
         }
-        if (inputValues.name.length < 1) {
+        const nameLetter =/^[A-Za-z]+$/
+        if (!nameLetter.test(inputValues.name)) {
           errors.name = "Emp Name must contain only letters";
         }
         if (!inputValues.dateOfBirth || inputValues.dateOfBirth.length < 1) {
@@ -48,13 +44,15 @@ const AddEmployee = () => {
         if (inputValues.address.length < 5) {
           errors.address = "Please enter a valid address";
         }
-        if (inputValues.contactNumber.length < 10) {
+        if (!/^(0|[1-9])[0-9]{9}$/.test(inputValues.contactNumber)){
           errors.contactNumber = "Contact Number should be 10 digits";
         }
-        if (inputValues.position.length < 2) {
+        const positionLetter =/^[A-Za-z]+$/
+        if (!positionLetter.test(inputValues.position)) {
           errors.position = "Position must contain only letters";
         }
-        if (inputValues.department.length < 1) {
+        const deptLetter =/^[A-Za-z]+$/
+        if (!deptLetter.test(inputValues.department)) {
           errors.department = "Department must contain only letters";
         }
         if (!inputValues.joinedDate || inputValues.joinedDate.length < 1) {
@@ -159,7 +157,7 @@ const AddEmployee = () => {
         value={state.name}
         onChange={handleChange}
         />
-        {errors.Name && (
+        {errors.name && (
           <div class="text-danger mt-2">
             Name must contain only letters
           </div>
@@ -208,6 +206,7 @@ const AddEmployee = () => {
         placeholder="Enter Contact Number of the employee"
         value={state.contactNumber}
         onChange={handleChange}
+        maxLength="10"
         />
          {errors.contactNumber && (
           <div class="text-danger mt-2">
@@ -264,7 +263,8 @@ const AddEmployee = () => {
           )}
     </div>
 
-    <button className='btn btn-success mt-5' type='submit' onClick={onsubmit}>
+    <button className='btn btn-success mt-5'  style={{backgroundColor: "#596584 "}}
+     type='submit' onClick={onsubmit}>
          Save
       </button>
             </div>

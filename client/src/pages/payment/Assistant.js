@@ -5,9 +5,7 @@ const Assistant = () => {
   return (
     <div>
         <View />
-        <button className='btn btn-primary mt-5' type='submit'>
-            <a href="./add"  style={{textDecoration: 'none', color:'white'}}>Create</a>
-      </button>
+       
     </div>
   )
 }

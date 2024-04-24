@@ -12,7 +12,7 @@ const empDetailsSchema = new mongoose.Schema({
         required : true
     },
     dateOfBirth : {
-        type : Date,
+        type : String,
         required : true
     },
     address: {
@@ -32,7 +32,7 @@ const empDetailsSchema = new mongoose.Schema({
         required : true  
     },
     joinedDate : {
-        type : Date,
+        type : String,
         required : true
     }
 },{
