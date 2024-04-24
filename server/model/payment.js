@@ -10,7 +10,7 @@ type:String,
 required:true
     },
     Date:{
-        type:Date,
+        type:String,
         required:true
     },
     CustomerName:{

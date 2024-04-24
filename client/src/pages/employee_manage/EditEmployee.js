@@ -25,7 +25,8 @@ const EditEmployee = () => {
       if (inputValues.empID.length < 6) {
         errors.empID = "EmpID should have 6 characters";
       }
-      if (inputValues.name.length < 1) {
+      const nameLetter =/^[A-Za-z]+$/
+      if (!nameLetter.test(inputValues.name)) {
         errors.name = "Emp Name must contain only letters";
       }
       if (!inputValues.dateOfBirth || inputValues.dateOfBirth.length < 1) {
@@ -43,15 +44,17 @@ const EditEmployee = () => {
       if (inputValues.address.length < 5) {
         errors.address = "Please enter a valid address";
       }
-      if (inputValues.contactNumber.length < 10) {
+      if  (!/^(0|[1-9])[0-9]{9}$/.test(inputValues.contactNumber)) {
         errors.contactNumber = "Contact Number should be 10 digits";
       }
-      if (inputValues.position.length < 2) {
+      const positionLetter =/^[A-Za-z]+$/
+      if (!positionLetter.test(inputValues.position)) {
         errors.position = "Position must contain only letters";
       }
-      if (inputValues.department.length < 1) {
-        errors.department = "Department must contain only letters";
-      }
+      const deptLetter =/^[A-Za-z]+$/
+        if (!deptLetter.test(inputValues.department)) {
+          errors.department = "Department must contain only letters";
+        }
       if (!inputValues.joinedDate || inputValues.joinedDate.length < 1) {
         errors.joinedDate = "Joined date is required";
       } else {
@@ -217,6 +220,7 @@ const EditEmployee = () => {
         placeholder="Enter Contact Number"
         value={state.contactNumber}
         onChange={handleChange}
+        maxLength="10"
         />
         {errors.contactNumber && (
           <div class="text-danger mt-2">
@@ -270,7 +274,8 @@ const EditEmployee = () => {
           </div>)}
     </div>
 
-  <button className='btn btn-success mt-5' type='submit' onClick={onsubmit}>
+  <button className='btn btn-success mt-5'  style={{backgroundColor: "#596584 "}}
+  type='submit' onClick={onsubmit}>
          Save
       </button>
       </div>

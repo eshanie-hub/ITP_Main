@@ -29,8 +29,8 @@ const Home = () => {
       
       </div>
 
-      <div class=""  style={{backgroundColor: "#e2e9fc"}}>
-        <h3 class="text-center py-5">Testimony</h3>
+      <div class=""  style={{backgroundColor: "#596584"}}>
+        <h3 class="text-center py-5 text-light">Testimony</h3>
 
         <div class="pb-5">
         <div id="carouselExampleDark" class="carousel carousel-dark slide">
@@ -129,9 +129,28 @@ There is a huge fundamental difference between Vidma engineering and other roofi
     
     
     </div>
-    <footer class="py-3 text-center" style={{backgroundColor: "#596584"}}>
-      <p class="text-light">phone: +94 764 409 693   |   email: info@vidmaengineer.com</p>
-    </footer>
+    <div
+          className="row mt-5 mb-5 mx-5 align-self-center"
+          style={{
+            top: "100px",
+            backgroundColor: "#c1b688",
+            borderRadius: "20px",
+          }}>
+          <div className="row  p-3  mx-5">
+            <div className="col">
+              <h5>CALL US</h5>
+              <p>+94 764 409 693</p>
+            </div>
+            <div className="col">
+              <h5>LOCATION</h5>
+              <p>No 190/1,Werahara,Boralesgamuwa.</p>
+            </div>
+            <div className="col">
+              <h5>Email</h5>
+              <p>info@vidmaengineer.com</p>
+            </div>
+          </div>
+        </div>
     </div>
   )
 }

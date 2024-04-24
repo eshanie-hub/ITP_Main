@@ -113,7 +113,7 @@ export const EditItem = () => {
         <div class="col py-3">
             <div class="mt-5 mb-5 ">
                 <h4>
-                    <span class="badge text-bg-secondary">
+                    <span class="badge" style={{backgroundColor: "#596584 "}}>
                     Inventory Add 
                     </span>
                 </h4>
@@ -235,7 +235,7 @@ export const EditItem = () => {
           )}
     </div>
 
-  <button className='btn btn-success mt-5' type='submit' onClick={handleSubmit}>
+  <button className='btn mt-5' style={{backgroundColor: "#c1b688 "}} type='submit' onClick={handleSubmit}>
          Save
       </button>
 </div>

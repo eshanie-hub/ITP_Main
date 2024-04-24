@@ -39,9 +39,21 @@ const EditDelivery = () => {
       };
     const handleChange = (e) =>{
       const {name, value} = e.target;
-  
-      setState({...state,[e.target.name]:e.target.value})
-    }
+      let newValue = value;
+
+// Perform specific validations based on the input field
+if (name === "SalesExecutiveName" || name === "OperatorName" || name === "DeliveryStatus") {
+  // Allow only alphabetic characters
+  newValue = value.replace(/[^A-Za-z]/ig, "");
+} else if (name === "OrderNo" || name === "Amount") {
+  // Allow only integers
+  newValue = value.replace(/\D/g, "");
+}
+
+      //setState({...state,[e.target.name]:e.target.value});
+      setState({...state, [name]: newValue});
+setErrors(validateValues({...state, [name]: newValue}));
+}
   
     const onsubmit = (e) => {
       e.preventDefault();
