@@ -62,9 +62,9 @@ const handleForm = (e) => {
 
   return (
     <>
-    <section class="bg-image" >
-      <img src={require("../../assets/loginbg.png")} style={{height: "92.2vh", position: "relative"}} width="100%" alt=""/>
-    <div class="mask container py-5" style={{position: "absolute"}} >
+    <section class="bg-image card img-fluid ">
+      <img src={require("../../assets/loginbg1.png")}  class="card-img-top" width="100%" style={{height: "92vh"}} alt=""/>
+    <div class="container card-img-overlay my-5" >
       <div class="row d-flex justify-content-center align-items-center">
         <div class="col col-xl-8">
           <div class="card" style={{borderRadius: "1rem"}}>
@@ -96,7 +96,7 @@ const handleForm = (e) => {
                     </div>
   
                     <div class="pt-1 mb-4">
-                      <button class="btn btn-dark btn-lg btn-block" type="button" onClick={handleForm}>Login</button>
+                      <button class="btn btn-lg btn-block" type="button" style={{backgroundColor: "#c1b688 "}} onClick={handleForm}>Login</button>
                     </div>
                   </form>
   
