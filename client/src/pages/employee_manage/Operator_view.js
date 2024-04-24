@@ -3,29 +3,31 @@ import Header from '../../component/Header'
 import axios from 'axios'
 
 const Operator_view = () => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [state, setState] = useState({
-    empDetails: []
-})
+    empDetails: [],
+  });
+ 
 
-useEffect(() => {
-    axios.get("http://localhost:8000/empDetails/").then(res =>{
-        if(res.data){
-          setState({
-            empDetails:res.data
-          })
-        }
-      })
-    }, [state]);
-  
-  
-    const onDelete = (id) => {
-      axios.delete(`http://localhost:8000/empDetails/delete/${id}`)
+  useEffect(() => {
+    axios.get('http://localhost:8000/empDetails/').then((res) => {
+      if (res.data) {
+        setState({
+          empDetails: res.data,
+        });
+      }
+    });
+  }, [state]);
+
+  const onDelete = (id) => {
+    axios.delete(`http://localhost:8000/empDetails/delete/${id}`)
       .then((res) => {
         alert("Deleted Employee Details Successfully");
-        
       })
-    }
+      .catch(error => {
+        console.error("Error Deleting Employee", error);
+      });
+  };
     
   return (
     <>
@@ -35,6 +37,7 @@ useEffect(() => {
       <div class="container-fluid">
         <div class="row flex-nowrap">
           <div class="col py-3">
+         
           {/* table */}
           <table class="table table-striped">
                 <thead>
@@ -67,7 +70,7 @@ useEffect(() => {
                     <td>{empDetails.joinedDate}</td>
                     <td>
                     <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-success btn-sm">
+                    <button type="button" class="btn btn-success btn-sm"  style={{backgroundColor: "#596584 "}}>
                         <a href={`/pages/employee_manage/edit/${empDetails._id}`} style={{textDecoration: 'none', color:'white'}}>
                             Update
                         </a>
