@@ -11,8 +11,8 @@ const Assistant_view = () => {
     const message = state.inventory.map((data, index) => {
       if(data.stockCount < data.reorderPoint ){ 
         return (
-          <div class="alert alert-danger mb-5" role="alert">
-            <span>item name:<b>{(index ? ', ' : '') + data.itemName}</b>is stockcount is low!</span>
+          <div class="alert alert-warning mb-5" role="alert">
+            <span>item name:<b>{(index ? ', ' : '') + data.itemName}</b> is stockcount is low!</span>
           </div>
         )
         
@@ -87,8 +87,8 @@ const Assistant_view = () => {
                     <td>{inventory.stockCount}</td>
                     <td>{inventory.reorderPoint}</td>
                     <td>
-                    <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-success btn-sm">
+                    <div class="d-grid gap-2" >
+                    <button type="button" class="btn btn-sm"  style={{backgroundColor: "#596584 "}} >
                         <a href={`/pages/inventory/edit/${inventory._id}`} style={{textDecoration: 'none', color:'white'}}>
                             update
                         </a>
@@ -101,8 +101,8 @@ const Assistant_view = () => {
                 </tbody>
                 </table>
 
-                <button className='btn btn-primary'>
-                <a href="/pages/inventory/add" style={{textDecoration: 'none', color:'white'}}>
+                <button className='btn' style={{backgroundColor: "#c1b688 "}}>
+                <a href="/pages/inventory/add" style={{textDecoration: 'none', color:'black'}}>
                     create new Item
                 </a>
             </button>

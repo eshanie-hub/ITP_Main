@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Header from '../../component/Header';
 import axios from 'axios';
 
+
+
 const View = () => {
   const [search, setSearch] = useState("");
   const [state, setState] = useState({
@@ -46,6 +48,7 @@ useEffect(() => {
                     <th scope="col">Amount</th>
                   <th scope="col">DeliveryStatus</th>
                     <th scope="col">Status</th>
+                    
                     </tr>
                 </thead>
                 <tbody>
@@ -63,12 +66,13 @@ useEffect(() => {
                     
                     <td>
                     <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-success btn-sm">
+                    <button type="button" className="btn btn-sm" style={{backgroundColor: "#596584"}}>
                         <a href={`/pages/delivery/edit/${delievery._id}`} style={{textDecoration: 'none', color:'white'}}>
                             update
                         </a>
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" onClick={() => onDelete(delievery._id)}>Delete</button>
+                    
                     </div>
                     </td>
                     </tr>
