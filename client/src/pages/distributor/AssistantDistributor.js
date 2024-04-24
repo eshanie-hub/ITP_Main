@@ -17,21 +17,57 @@ useEffect(() => {
       })
     }, [state]);
   
-  
-    const onDelete = (id) => {
-      axios.delete(`http://localhost:8000/distributor/delete/${id}`)
-      .then((res) => {
-        alert("Deleted successfully");
-        
-      })
-    }
     const [search, setSearch] = useState("");
         // console.log(search);
+        
+    const [expiredAgreements, setExpiredAgreements] = useState([]);
+        //check expired agreement
+    useEffect(() => {
+      const currentDate = new Date();
+        
+      const expired = state.distributor.filter(distributor => {
+        const signedDateObj = new Date(distributor.date);
+        const expirationDate = new Date(signedDateObj.setFullYear(signedDateObj.getFullYear() + 2));
+        return expirationDate < currentDate;
+      });
+        
+          setExpiredAgreements(expired);
+          if (expired.length > 0) {
+            setNotification(`Found ${expired.length} expired agreements.`);
+          } else {
+            setNotification('No expired agreements found.');
+          }
+         }, [state]);
+
+    const [notification, setNotification] = useState(null); // State for notification message
+    const Notification = ({ message }) => {
+          return (
+            <div className="notification">
+              {message}
+            </div>
+          );
+        };
+          
   return (
     <>
     <div class="col">
         <Header dashboard={"Distributor Management System"} setSearch={setSearch}/>
     </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong><h2>Expired Agreements</h2></strong> 
+    <div>
+     
+      {notification && <Notification message={notification} />} {/* Render the Notification component */}
+      <ul>
+        {expiredAgreements.map(distributor => (
+          <li key={distributor.distributorId}>{distributor.distributorName} - Signed on {distributor.date}</li>
+        ))}
+      </ul>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    
     <div class="container-fluid">
     <div class="row flex-nowrap">
       <div class="col py-3">
@@ -69,7 +105,6 @@ useEffect(() => {
                             update
                         </a>
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm" onClick={() => onDelete(distributor._id)}>Delete</button>
                     </div>
                     </td>
                     </tr>
@@ -78,7 +113,7 @@ useEffect(() => {
                 </table>
 
         <button className='btn btn-primary mt-5' type='submit'>
-            <a href="./add"  style={{textDecoration: 'none', color:'white'}}>Add</a>
+            <a href="./add"  style={{textDecoration: 'none', color:'white'}}>Add Distributor</a>
       </button>
         </div>
         </div>

@@ -20,25 +20,56 @@ export const EditSalary = () => {
 
   const validateValues = (inputValues) => {
     let errors = {};
-    if (inputValues.EmpId.length < 3) {
-      errors.EmpId = "Employee ID is too short";
+    if (isNaN(inputValues.EmpId) || inputValues.EmpId.length < 3) {
+      errors.EmpId = "Employee ID must be a valid number";
     }
     if (inputValues.EmpName.length < 4) {
       errors.EmpName = "Employee Name is too short";
     }
-    if (inputValues.BasicSalary.length < 1) {
-      errors.BasicSalary = "Basic Salary is too short";
+    if (typeof inputValues.EmpName !== 'string') {
+      errors.EmpName = "Employee Name must be a string";
+    }
+    if (isNaN(inputValues.BasicSalary) || inputValues.BasicSalary.length < 1) {
+      errors.BasicSalary = "Basic Salary must be a valid number";
     }
     return errors;
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let updatedState = { ...state, [name]: value };
+  
+    if (name === 'BasicSalary') {
+      const basicSalary = parseFloat(value);
+  
+      // Calculate bonus (10% of Basic Salary)
+      const bonus = basicSalary * 0.1;
+  
+      // Calculate Tax based on Basic Salary
+      let tax = 0;
+      if (basicSalary >= 50000) {
+        tax = basicSalary * 0.05;
+      } else if (basicSalary >= 30000) {
+        tax = basicSalary * 0.03;
+      }
+  
+      // Calculate Net Salary (Basic Salary + Bonus - Tax)
+      const netSalary = basicSalary + bonus - tax;
+  
+      updatedState = {
+        ...updatedState,
+        Bonus: bonus.toFixed(2),
+        Tax: tax.toFixed(2),
+        NetSalary: netSalary.toFixed(2)
+      };
+    }
+  
     setState(prevState => ({
       ...prevState,
-      [name]: value
+      ...updatedState
     }));
-    setErrors(validateValues({ ...state, [name]: value }));
+  
+    setErrors(validateValues(updatedState));
   };
 
   const onSubmit = (event) => {
@@ -76,7 +107,7 @@ export const EditSalary = () => {
   return (
     <>
       <div className="col">
-        <Header dashboard={"Employee Salary System"} />
+        <Header dashboard={"Employee Salary Management"} />
       </div>
       <div className="container-fluid">
         <div className="row flex-nowrap">
@@ -94,7 +125,7 @@ export const EditSalary = () => {
                     type="text"
                     name="EmpId"
                     className="form-control"
-                    placeholder="Enter EmpId of the post"
+                    placeholder="Enter EmpId"
                     value={state.EmpId}
                     onChange={handleChange}
                   />
@@ -110,7 +141,7 @@ export const EditSalary = () => {
                     type="text"
                     name="EmpName"
                     className="form-control"
-                    placeholder="Enter Employee Name of the post"
+                    placeholder="Enter Employee Name"
                     value={state.EmpName}
                     onChange={handleChange}
                   />
@@ -128,7 +159,7 @@ export const EditSalary = () => {
                     type="text"
                     name="BasicSalary"
                     className="form-control"
-                    placeholder="Enter BasicSalary of the post"
+                    placeholder="Enter Basic Salary"
                     value={state.BasicSalary}
                     onChange={handleChange}
                   />
@@ -144,7 +175,6 @@ export const EditSalary = () => {
                     type="text"
                     name="Bonus"
                     className="form-control"
-                    placeholder="Enter Bonus of the post"
                     value={state.Bonus}
                     onChange={handleChange}
                   />
@@ -155,7 +185,6 @@ export const EditSalary = () => {
                     type="text"
                     name="Tax"
                     className="form-control"
-                    placeholder="Enter Tax of the post"
                     value={state.Tax}
                     onChange={handleChange}
                   />
@@ -166,7 +195,6 @@ export const EditSalary = () => {
                     type="text"
                     name="NetSalary"
                     className="form-control"
-                    placeholder="Enter NetSalary of the post"
                     value={state.NetSalary}
                     onChange={handleChange}
                   />

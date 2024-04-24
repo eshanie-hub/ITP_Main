@@ -91,7 +91,7 @@ const EditCustomer = () => {
                   disabled
                 />
               </div>
-              <div className="col-6">
+              <div className="col">
                 <label className="form-label">Date</label>
                 <input
                   type="text"
@@ -118,10 +118,7 @@ const EditCustomer = () => {
               <div className="col">
                 <label className="form-label">Mail</label>
                 <div className="d-flex align-items-center">
-                  <button
-                    className="btn btn-primary me-2"
-                    onClick={openMailbox}
-                  >
+                  <button className="btn btn-light me-2" onClick={openMailbox}>
                     {state.mail}
                   </button>
                 </div>
@@ -153,7 +150,8 @@ const EditCustomer = () => {
               </div>
             </div>
             <button
-              className="btn btn-success mt-5"
+              className="btn mt-5"
+              style={{ background: "#c1b688" }}
               type="submit"
               onClick={onSubmit}
             >

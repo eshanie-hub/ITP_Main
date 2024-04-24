@@ -31,7 +31,7 @@ app.use("/salary", salaryRoutes);
 app.use("/distributor", distributorRouter);
 
 const PORT  = 8000;
-const DB_URL = 'mongodb+srv://project1:project1@cluster0.b1cggpg.mongodb.net/Vidama'
+const DB_URL = 'mongodb+srv://it22341204:it22341204@cluster0.xpymwhs.mongodb.net/?retryWrites=true&w=majority'
 
 
 mongoose.connect(DB_URL)

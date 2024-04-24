@@ -15,12 +15,13 @@ const SideMenuControl = () => {
   return (
     <div class="container-fluid">
     <div class="row flex-nowrap ">
-      {menu==="op" && <Operator />}
-      {menu ==="fa" && <Factory />}
-      {menu ==="as" && <Assistant />}
-      {menu ==="se" && <SalesExecutive />}
-      {menu ==="md" && <ManagingDirector />}
-      {menu ==="cm" && <CreditManager />}
+      
+      {menu.startsWith("op") && /^\d{4}$/.test(menu.slice(2)) && <Operator /> }
+      {menu.startsWith("fa") && /^\d{4}$/.test(menu.slice(2)) && <Factory />}
+      {menu.startsWith("as") && /^\d{4}$/.test(menu.slice(2)) && <Assistant />}
+      {menu.startsWith("se") && /^\d{4}$/.test(menu.slice(2)) && <SalesExecutive />}
+      {menu.startsWith("md") && /^\d{4}$/.test(menu.slice(2)) && <ManagingDirector />}
+      {menu.startsWith("cm") && /^\d{4}$/.test(menu.slice(2)) && <CreditManager />}
         <div class="col py-3 m-5">
           
         <Outlet/>

@@ -28,22 +28,22 @@ const AddDistributor = () => {
           errors.creditLimit = "credit Limit can't be null";
         }
         
-        if (inputValues.phoneNo.length < 9) {
+        if (inputValues.phoneNo.length <= 8) {
           errors.phoneNo = "not valid phone number";
         }
         if (inputValues.agreementStatus.length < 1) {
           errors.agreementStatus = "Agreement status can't be null";
         }
         if (!inputValues.date || inputValues.date.length < 1) {
-          errors.date = "Date of birth is required";
+          errors.date = "Date of agreement is required";
         } else {
           // Validate if the date is in a valid format and a realistic date
           const doa = new Date(inputValues.date);
-          const isValidDate = !isNaN(doa.getTime()); // Check if it's a valid date
-          const isRealisticDate = doa <= new Date(); // Check if it's not a future date
+          const isValidAgreementDate = !isNaN(doa.getTime()); // Check if it's a valid date
+          const isRealisticAgreementDate = doa <= new Date(); // Check if it's not a future date
       
-          if (!isValidDate || !isRealisticDate) {
-            errors.date = "Date of birth is required";
+          if (!isValidAgreementDate || !isRealisticAgreementDate) {
+            errors.date = "Date of agreement is invalid";
           }
         }
         return errors;
@@ -117,7 +117,7 @@ const AddDistributor = () => {
         />
         {errors.distributorId && (
           <div class="text-danger mt-2">
-            distributorId should have 4 characters
+            distributorId should have more than 4 characters
           </div>)}
     </div>
     <div class="col-6">
