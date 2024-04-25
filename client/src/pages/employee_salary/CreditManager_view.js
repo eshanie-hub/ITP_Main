@@ -62,7 +62,7 @@ useEffect(() => {
                     <td>{salary.NetSalary}</td>
                     <td>
                     <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-success btn-sm">
+                    <button type="button" class="btn btn-sm" style={{backgroundColor: "#596584 "}} >
                         <a href={`/pages/employee_salary/edit/${salary._id}`} style={{textDecoration: 'none', color:'white'}}>
                             update
                         </a>
@@ -74,8 +74,8 @@ useEffect(() => {
                 ))}
                 </tbody>
                 </table>
-        <button className='btn btn-primary mt-5' type='submit'>
-            <a href="./add"  style={{textDecoration: 'none', color:'white'}}>Add</a>
+        <button className='btn mt-5' style={{backgroundColor:"#c1b688"}} type='submit'>
+            <a href="./add"  style={{textDecoration: 'none', color:'black'}}>Add</a>
       </button>
         </div>
         </div>

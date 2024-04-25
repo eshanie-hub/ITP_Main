@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Header from '../../component/Header'
 import axios from 'axios'
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 
 
@@ -19,7 +21,24 @@ useEffect(() => {
       })
     }, [state]);
 
-
+//Report download function
+const pdfRef = useRef();
+const downloadPDF = () => {
+  const input = pdfRef.current;
+  html2canvas(input).then((Canvas) => {
+    const imgData = Canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4', true);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const imgWidth = Canvas.width;
+    const imgHeight = Canvas.height;
+    const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+    const imgX = (pdfWidth - imgWidth * ratio) / 2;
+    const imgY = 30;
+    pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+    pdf.save('distributorReport.pdf');
+  });
+};
     
     const calculatePercentage = (count, total) => {
       return ((count / total) * 100).toFixed(2);
@@ -64,6 +83,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
         <Header dashboard={"Distributor Management System"} />
     </div>
     <div>
+    <div ref={pdfRef}>
       <h4>Distributor Credit Limit Distribution</h4>
       <table class="table">
         <thead>
@@ -106,15 +126,18 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
                    </PieChart>
             )}
         
-           
-
+        </div>
+        </div>
+        <div className="mt-5">
+            <button className='btn me-2' style={{backgroundColor: "#c1b688 "}} onClick={downloadPDF}>Download PDF</button>
     
-            <button className='btn btn-primary mt-5' type='submit'>
-            <a href="./ManagingDirector_view"  style={{textDecoration: 'none', color:'white'}}>Back</a>
+            <button className='btn' style={{backgroundColor: "#c1b688 "}} type='submit'>
+            <a href="./ManagingDirector_view"  style={{textDecoration: 'none', color:'black'}}>Back</a>
             </button>
+            </div>
         </div>
         </div>
-      </div>
+      
     </>
   )
 }
