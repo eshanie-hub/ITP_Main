@@ -1,205 +1,170 @@
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../component/Header';
+import PropTypes from 'prop-types';
+import { useLocation, useParams, Link, useNavigate } from 'react-router-dom';
+import Payment_report from './Payment_report';
 
-
-export const EditPay = () => {
+const EditPay = () => {
+  const location = useLocation();
   const params = useParams();
-    const navigate = useNavigate();
-    const [state, setState] = useState({
-      OrderNo: "",
-      PaymentId: "",
-      Date: "",
-      CustomerName: "",
-      Payment: ""
-        
-      })
-    const [errors, setErrors]=useState({});
-    const[submitting, setSubmitting]=useState(false);
+  const navigate = useNavigate();
+  const [search, setSearch] = useState('');
+  const searchParams = new URLSearchParams(location.search);
+  const customerName = searchParams.get('customerName');
+  const [order_placement, setOrder_placement] = useState([]);
+  const [payment, setPayment] = useState([]);
+  const [totalFilteredCreditLimit, setTotalFilteredCreditLimit] = useState(0);
+  const [totalPaymentAmount, setTotalPaymentAmount] = useState(0);
+  const [remainingCredit, setRemainingCredit] = useState(0);
+  useEffect(() => {
+    axios.all([
+      axios.get(`http://localhost:8000/order_placement/?customerName=${customerName}`),
+      axios.get(`http://localhost:8000/payment/?customerName=${customerName}`)
+    ]).then(axios.spread((order_placementRes, paymentRes) => {
+      setOrder_placement(order_placementRes.data);
+      setPayment(paymentRes.data);
 
-    const validateValues=(inputValues)=>{
-      let errors={};
-      if (inputValues.OrderNo.length<4) {
-        errors.OrderNo="orderNo is too short";
-      }
-       if (inputValues.PaymentId.length<1) {
-          errors.PaymentId="PaymentId is too short";
-        }
-        if (inputValues.Date.length<1) {
-          errors.Date="Date is too short";
-        }
-        if (inputValues.CustomerName.length<1) {
-          errors.CustomerName="CustomerName is too short";
-        }
-        if (inputValues.Payment.length<1) {
-          errors.Payment="Payment is too short";
-        }
-        return errors;
-    };
-      const handleChange = (e) =>{
-       setState({...state,[e.target.name]:e.target.value});
-      setErrors(validateValues(state));
-      }
-    
-      const handleSubmit=(event)=>{
-        event.preventDefault();
-        setErrors(validateValues(state));
-        setSubmitting(true);
+      let totalFilteredCreditLimit = 0;
+      const filteredOrderPlacement = order_placementRes.data.filter(order => order.orderType === 'credit' && order.orderStatus === 'approved');
+      filteredOrderPlacement.forEach(item => {
+        totalFilteredCreditLimit += item.amount;
+      });
 
-        if(Object.keys(errors).length===0 && submitting){
-          const 
-        {
-            OrderNo, 
-            PaymentId, 
-            Date,
-            CustomerName,
-            Payment
-            
-        } = state;
-    
-        const data = {
-          OrderNo: OrderNo,
-          PaymentId: PaymentId,
-          Date: Date,
-          CustomerName: CustomerName,
-          Payment: Payment
-            
-        }
-      
-      
-        
-    
-        axios.put(`http://localhost:8000/payment/update/${params.id}`, data)
-        .then((res) => {
-          alert("Data submited successfully");
-          navigate(-1);
-        })
-      }
-    }
-      useEffect(() => {
-        axios.get(`http://localhost:8000/payment/get/${params.id}`).then((res) => {
-          if(res.data){
-            setState({
-              OrderNo: res.data.OrderNo,
-              PaymentId: res.data.PaymentId,
-              Date: res.data.Date,
-              CustomerName: res.data.CustomerName,
-              Payment: res.data.Payment,
-              })
-            
-          }
-        })
-      },[params.id]);
+      setTotalFilteredCreditLimit(totalFilteredCreditLimit);
+
+      // Calculate total payment for the relevant customer
+      let totalPaymentAmount = 0;
+      paymentRes.data.filter(payment => payment.CustomerName === customerName)
+        .filter(payment => search.toLowerCase() === '' || payment.CustomerName.toLowerCase().includes(search))
+        .forEach(item => {
+          totalPaymentAmount += item.Payment;
+        });
+
+      setTotalPaymentAmount(totalPaymentAmount);
+      setRemainingCredit(totalFilteredCreditLimit - totalPaymentAmount);
+    }));
+  }, [customerName, search]);
+
+  // Calculate total credit for the relevant customer
+  useEffect(() => {
+    const totalCredit = order_placement
+      .filter(order => order.customerName === customerName)
+      .reduce((acc, order) => acc + order.amount, 0);
+    setTotalFilteredCreditLimit(totalCredit);
+  }, [order_placement, customerName]);
+
+  useEffect(() => {
+    setRemainingCredit(totalFilteredCreditLimit - totalPaymentAmount);
+  }, [totalFilteredCreditLimit, totalPaymentAmount]);
 
   return (
     <>
-    <div class="col">
+      <div className="col">
         <Header dashboard={"Payment history Management System"} />
-    </div>
-    <div class="container-fluid">
-      <div class="row flex-nowrap">
-        <div class="col py-3">
-            <div class="mt-5 mb-5 ">
-                <h4>
-                    <span class="badge text-bg-secondary">
-                    Payment Add 
-                    </span>
-                </h4>
-            </div>
-          
-
-  <div class="row mb-5">
-    <div class="col">
-        <label class="form-label">OrderNo</label>
-        <input 
-        type="text"
-        name="OrderNo" 
-        className='form-control'
-        placeholder="Enter OrderNo of the post"
-        value={state.OrderNo}
-        onChange={handleChange}
-        />
-        {errors.OrderNo && (
-          <div class="text-danger mt-2">
-            OrderNo should have 4 characters
-       </div> )}
-    </div>
-    <div class="col-6">
-    <label class="form-label">PaymentId</label>
-        <input 
-        type="text"
-        name="PaymentId" 
-        className='form-control'
-        placeholder="Enter Payment id no of the post"
-        value={state.PaymentId}
-        onChange={handleChange}
-        />
-        {errors.PaymentId && (
-          <div class="text-danger mt-2">
-            PaymentId should have 4 characters
-       </div> )}
-    </div>
-  </div>
-  <div class="row mt-4">
-  <div class="col">
-    <label class="form-label">Date</label>
-        <input 
-        type="text"
-        name="Date" 
-        className='form-control'
-        placeholder="Enter date of the post"
-        value={state.Date}
-        onChange={handleChange}
-        />
-        {errors.Date && (
-          <div class="text-danger mt-2">
-            Date can't be null
-       </div> )}
-    </div>
-    </div>
-    <div class="row mt-4">
-    <div class="col">
-    <label class="form-label">CustomerName</label>
-        <input 
-        type="text"
-        name="CustomerName" 
-        className='form-control'
-        placeholder="Enter Customer name of the post"
-        value={state.CustomerName}
-        onChange={handleChange}
-        />
-        {errors.CustomerName && (
-          <div class="text-danger mt-2">
-            CustomerName can't be null
-       </div> )}
-    </div>
-    <div class="col">
-    <label class="form-label">Payment</label>
-        <input 
-        type="text"
-        name="Payment" 
-        className='form-control'
-        placeholder="Enter payment of the post"
-        value={state.Payment}
-        onChange={handleChange}
-        />
-         {errors.Payment && (
-          <div class="text-danger mt-2">
-            Payment can't be null
-       </div> )}
-    </div>
-    
-  <button className='btn btn-success mt-5' type='submit' onClick={handleSubmit}>
-         Save
-      </button>
-</div>
-
-          </div>
       </div>
-    </div>
-  </>
-  )
-}
+      <div className="container-fluid">
+        <div className="row flex-nowrap">
+          <div className="col py-3">
+            <div className="mt-5 mb-5 ">
+              <h5>Customer Name: {customerName}</h5>
+            </div>
+            <div className="container">
+              <div className="row">
+                <div className="col-8 ">
+                
+                  <div className='card mt-5' style={{ width: '600px' }}>
+                    <div className="card-header ">
+                      <h4>Credit Table</h4>
+                    </div>
+                    <table name="Credit table" className="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>OrderNo</th>
+                          <th>Date</th>
+                          <th>Credit Limit</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {order_placement
+                          .filter(order => order.customerName === customerName)
+                          .map((order, index) => (
+                            <tr key={index}>
+                              <td>{order.orderNo}</td>
+                              <td>{order.date}</td>
+                              <td>{order.amount}</td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+              
+                  <div className='card mt-5' style={{ width: '600px' }}>
+                    <div className="card-header">
+                      <h4>Payment Table<Link to={`/pages/payment/add/${params.id}`} style={{ backgroundColor: "#c1b688" }} className="btn  float-end  ">Add payment</Link></h4>
+                    </div>
+                    <table name="payment table" className="table table-striped"  >
+                      <thead>
+                        <tr>
+                          <th>OrderNo</th>
+                          <th>PaymentId</th>
+                          <th>Date</th>
+                          <th>Payment</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {payment.filter(payment => payment.CustomerName === customerName)
+                          .filter(payment => search.toLowerCase() === '' || payment.CustomerName.toLowerCase().includes(search))
+                          .map((payment, index) => (
+                            <tr key={index}>
+                              <td>{payment.OrderNo}</td>
+                              <td>{payment.PaymentId}</td>
+                              <td>{payment.Date}</td>
+                              <td>{payment.Payment}</td>
+                              <td>
+                                <button type="button" className="btn btn-sm" style={{ backgroundColor: "#596584 " }} >
+                                  <Link to={`/pages/payment/update/${payment._id}`} style={{ textDecoration: 'none', color: 'white' }}>
+                                    Update
+                                  </Link>
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div className="col-2">
+                  <div className="card mt-5 p-3" style={{ width: '300px' }}>
+                    <h4 className="card-title">Payment Summary</h4>
+                    <div className="card-body">
+                      <div className="d-flex justify-content-between mb-3">
+                        <h6>Total credit limit :</h6>
+                        <p>{totalFilteredCreditLimit}</p>
+                      </div>
+                      <div className="d-flex justify-content-between mb-3">
+                        <h6>Total payment amount:</h6>
+                        <p>{totalPaymentAmount}</p>
+                      </div>
+                      <div className="d-flex justify-content-between mb-3">
+                        <h6>Remaining credit limit:</h6>
+                        <p>{remainingCredit}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+EditPay.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 
 export default EditPay;

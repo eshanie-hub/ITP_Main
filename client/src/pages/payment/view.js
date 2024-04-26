@@ -1,90 +1,98 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Header from '../../component/Header';
-import axios from 'axios'
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const View = () => {
   const [search, setSearch] = useState("");
   const [state, setState] = useState({
+    order_placement: [],
     payment: []
-  })
+  });
 
-useEffect(() => {
-    axios.get("http://localhost:8000/payment/").then(res =>{
-        if(res.data){
-          setState({
-            payment:res.data
-          })
-        }
-      })
-    }, [state]);
-  
-  
-    const onDelete = (id) => {
-      axios.delete(`http://localhost:8000/payment/delete/${id}`)
-      .then((res) => {
+  useEffect(() => {
+    axios.all([
+      axios.get('http://localhost:8000/order_placement/'),
+      axios.get('http://localhost:8000/payment/')
+    ]).then(axios.spread((order_placementRes, paymentRes) => {
+      setState({
+        order_placement: order_placementRes.data,
+        payment: paymentRes.data
+      });
+    }));
+  }, []);
+
+  const calculateRemainingCredit = (customerName) => {
+    const totalCredit = state.order_placement
+     .filter((order) => order.orderType === 'credit' && order.orderStatus === 'approved' && order.customerName === customerName)
+     .reduce((acc, order) => acc + order.amount, 0);
+      
+    console.log('Total credit for', customerName, ':', totalCredit);
+      
+    const totalPaymentAmount = state.payment
+     .filter((payment) => payment.CustomerName === customerName)
+     .reduce((acc, payment) => acc + payment.Payment, 0);
+
+    console.log('Total payment amount for', customerName, ':', totalPaymentAmount);
+      
+    return totalCredit - totalPaymentAmount;
+  };
+
+  const onDelete = (id) => {
+    axios.delete(`http://localhost:8000/payment/delete/${id}`)
+     .then((res) => {
         alert("Deleted successfully");
-        
       })
-    }
-    
+  }
+
+  const filteredOrders = state.order_placement.filter((order) => {
+    return order.customerName.toLowerCase().includes(search.toLowerCase());
+  });
+
   return (
     <>
-      <div class="col">
-          <Header dashboard={"Customer Payment History System"} setSearch={setSearch} />
+      <div className="col">
+        <Header dashboard={"Customer Payment History System"} setSearch={setSearch} />
       </div>
-      <div class="container-fluid">
-        <div class="row flex-nowrap">
-          <div class="col py-3">
-           {/* details */}
-           <table class="table table-striped">
-                <thead>
-                    <tr>
-                    <th scope="col">Order No</th>
-                    <th scope="col">Payment Id </th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Customer Name</th>
-                    <th scope="col">Payment</th>
-                    
-                    
-                    </tr>
-                </thead>
-                <tbody>
-                {state.payment.filter((payment) => {
-                  return search.toLowerCase()===''
-                  ? payment
-                  : payment.CustomerName.toLowerCase().includes(search);
-                })
-                
-                
-                
-                .map((payment, index) => (
+      <div className="container-fluid">
+        <div className="row flex-nowrap">
+          <div className="col py-3">
+            {/* details */}
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Customer Name</th>
+                  <th scope="col">Remaining credit</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredOrders
+                 .filter((order) => order.orderType === 'credit' && order.orderStatus === 'approved')
+                 .map((order, index) => (
                     <tr key={index}>
-                    <td>{payment.OrderNo}</td>
-                    <td>{payment.PaymentId}</td>
-                    <td>{payment.Date}</td>
-                    <td>{payment.CustomerName}</td>
-                    <td>{payment.Payment}</td>
-                
-                    <td>
-                    <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-success btn-sm">
-                        <a href={`/pages/payment/edit/${payment._id}`} style={{textDecoration: 'none', color:'white'}}>
-                            update
-                        </a>
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm" onClick={() => onDelete(payment._id)}>Delete</button>
-                    </div>
-                    </td>
+                      <td>{order.customerName}</td>
+                      <td>{calculateRemainingCredit(order.customerName)}</td>
+                      <td>
+                        <div className="d-grid gap-2">
+                        <button type="button" class="btn btn-sm" style={{backgroundColor: "#596584 "}} >
+                            <Link to={`/pages/payment/edit/${order._id}?customerName=${order.customerName}`} style={{ textDecoration: 'none', color: 'white' }}>
+                              View
+                            </Link>
+                          </button>
+                          <button type="button" className="btn btn-danger btn-sm" onClick={() => onDelete(order._id)}>Delete</button>
+                        </div>
+                      </td>
                     </tr>
-                ))}
-                </tbody>
-                </table>
-
-            </div>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </>
   )
 }
 
-export default View
+export default View;
