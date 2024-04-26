@@ -243,7 +243,7 @@ const AddOrder = () => {
     </div>
 
 
-  <button className='btn btn-success mt-5' type='submit' onClick={handleSubmit}>
+  <button className='btn btn-success mt-5' style={{backgroundColor: "#c1b688"}} type='submit' onClick={handleSubmit}>
          Save
       </button>
 </div>

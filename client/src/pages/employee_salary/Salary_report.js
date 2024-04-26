@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../component/Header';
 import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 import axios from 'axios';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const Salary_report = () => {
   const [salaryData, setSalaryData] = useState([]);
@@ -31,6 +33,19 @@ const Salary_report = () => {
   // Color palette for the pie chart
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
+  const handleDownloadPDF = () => {
+    const input = document.getElementById('report-container');
+
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const width = pdf.internal.pageSize.getWidth();
+      const height = pdf.internal.pageSize.getHeight();
+      pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+      pdf.save('salary_report.pdf');
+    });
+  };
+
   return (
     <>
       <div className="col">
@@ -38,7 +53,7 @@ const Salary_report = () => {
       </div>
       <div className="container-fluid">
         <div className="row flex-nowrap">
-          <div className="col py-3">
+          <div id="report-container" className="col py-3">
             <h2>Employee Salary Report</h2>
             <PieChart width={400} height={400}>
               <Pie
@@ -57,14 +72,47 @@ const Salary_report = () => {
               </Pie>
               <Tooltip />
             </PieChart>
-            <button className='btn btn-primary mt-5' type='submit'>
-              <a href="./Operator_view" style={{ textDecoration: 'none', color: 'white' }}>Back</a>
-            </button>
+            <div className="mt-5">
+              <h3>Details</h3>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Basic Salary</td>
+                    <td>{totalBasicSalary}</td>
+                  </tr>
+                  <tr>
+                    <td>Bonus</td>
+                    <td>{totalBonus}</td>
+                  </tr>
+                  <tr>
+                    <td>Tax</td>
+                    <td>{totalTax}</td>
+                  </tr>
+                  <tr>
+                    <td>Net Salary</td>
+                    <td>{totalNetSalary}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="d-flex justify-content-between mt-5">
+              <button className='btn me-2' style={{backgroundColor: "#c1b688"}} type='button' onClick={handleDownloadPDF}>
+                Download as PDF
+              </button>
+              <button className='btn me-2' style={{backgroundColor: "#c1b688"}} type='submit'>
+                <a href="./Operator_view" style={{ textDecoration: 'none', color: 'black' }}>Back</a>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </>
   );
 };
-
 export default Salary_report;

@@ -50,11 +50,15 @@ const Operator_view = () => {
       <div className="container-fluid">
         <div className="row flex-nowrap">
           <div className="col py-3">
+
+            
+
           {showAlert && (
-              <div className="alert alert-info" role="alert">
-                The order with orderId {updatedOrderId} is marked as delivered.
-              </div>
-            )}
+  <div style={{ backgroundColor: '#c1b688', color: '#fff' }} role="alert">
+    The order with orderId {updatedOrderId} is marked as delivered.
+  </div>
+)}
+
             <table className="table table-striped">
               <thead>
                 <tr>
