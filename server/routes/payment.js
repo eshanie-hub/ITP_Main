@@ -19,7 +19,6 @@ router.route("/add").post(async (req, res) => {
       Date,
       Payment,
       CustomerName, 
-    
     });
 
     await newPaymentH.save();
@@ -42,35 +41,35 @@ router.route("/").get((req, res) => {
     });
 });
 
-// Updating data
 router.route('/update/:id').put(async (req, res) => {
-  const id = req.params.id;
-  const { OrderNo, PaymentId, Date, CustomerName, Payment, Status } = req.body;
-
-  const updatePaymentH = {
+  let id = req.params.id;
+  const {
     OrderNo,
     PaymentId,
     Date,
-    CustomerName,
     Payment,
-    Status
-  };
+    CustomerName
+   
+  } = req.body;
 
-  try {
-    // Fetch the CustomerName from Order Placement
-    const order = await order_placement.findOne({ OrderNo });
-    const customerName = order ? order.customerName : "";
-
-    // Calculate the RemainingCredit
-    const remainingCredit = order ? order.amount - Payment : 0;
-
-    await payment.findByIdAndUpdate(id, { ...updatePaymentH, CustomerName: customerName });
-    res.status(200).send({ status: "Payment was updated" });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ status: "Error with updating data", error: err.message });
+  const updatePayment = {
+    OrderNo,
+    PaymentId,
+    Date,
+    Payment,
+    CustomerName
+      
+     
   }
-});
+
+  const update = await payment.findByIdAndUpdate(id, updatePayment)
+  .then(() => {
+      res.status(200).send({status: "Payment updated"})
+  }).catch((err) => {
+      console.log(err);
+      res.status(500).send({status: "Error with updating data", error: err.message});
+  }) 
+})
 
 // Delete
 router.route("/delete/:id").delete(async (req, res) => {

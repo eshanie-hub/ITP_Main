@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../../component/Header';
 import PropTypes from 'prop-types';
-import { useLocation, useParams, Link } from 'react-router-dom';
+import { useLocation, useParams, Link, useNavigate } from 'react-router-dom';
 import Payment_report from './Payment_report';
 
 const EditPay = () => {
   const location = useLocation();
   const params = useParams();
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const searchParams = new URLSearchParams(location.search);
   const customerName = searchParams.get('customerName');
@@ -16,7 +17,6 @@ const EditPay = () => {
   const [totalFilteredCreditLimit, setTotalFilteredCreditLimit] = useState(0);
   const [totalPaymentAmount, setTotalPaymentAmount] = useState(0);
   const [remainingCredit, setRemainingCredit] = useState(0);
-
   useEffect(() => {
     axios.all([
       axios.get(`http://localhost:8000/order_placement/?customerName=${customerName}`),
@@ -33,12 +33,13 @@ const EditPay = () => {
 
       setTotalFilteredCreditLimit(totalFilteredCreditLimit);
 
+      // Calculate total payment for the relevant customer
       let totalPaymentAmount = 0;
       paymentRes.data.filter(payment => payment.CustomerName === customerName)
         .filter(payment => search.toLowerCase() === '' || payment.CustomerName.toLowerCase().includes(search))
         .forEach(item => {
           totalPaymentAmount += item.Payment;
-      });
+        });
 
       setTotalPaymentAmount(totalPaymentAmount);
       setRemainingCredit(totalFilteredCreditLimit - totalPaymentAmount);
@@ -71,7 +72,8 @@ const EditPay = () => {
             <div className="container">
               <div className="row">
                 <div className="col-8 ">
-                  <div className='card mt-5' style={{ width: '600px' }}> 
+                
+                  <div className='card mt-5' style={{ width: '600px' }}>
                     <div className="card-header ">
                       <h4>Credit Table</h4>
                     </div>
@@ -96,9 +98,10 @@ const EditPay = () => {
                       </tbody>
                     </table>
                   </div>
-                  <div className='card mt-5' style={{ width: '600px' }}> 
+              
+                  <div className='card mt-5' style={{ width: '600px' }}>
                     <div className="card-header">
-                      <h4>Payment Table<Link to={`/pages/payment/add/${params.id}`} style={{backgroundColor:"#c1b688"}}className="btn  float-end  ">Add payment</Link></h4>
+                      <h4>Payment Table<Link to={`/pages/payment/add/${params.id}`} style={{ backgroundColor: "#c1b688" }} className="btn  float-end  ">Add payment</Link></h4>
                     </div>
                     <table name="payment table" className="table table-striped"  >
                       <thead>
@@ -107,6 +110,7 @@ const EditPay = () => {
                           <th>PaymentId</th>
                           <th>Date</th>
                           <th>Payment</th>
+                          <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -118,6 +122,13 @@ const EditPay = () => {
                               <td>{payment.PaymentId}</td>
                               <td>{payment.Date}</td>
                               <td>{payment.Payment}</td>
+                              <td>
+                                <button type="button" className="btn btn-sm" style={{ backgroundColor: "#596584 " }} >
+                                  <Link to={`/pages/payment/update/${payment._id}`} style={{ textDecoration: 'none', color: 'white' }}>
+                                    Update
+                                  </Link>
+                                </button>
+                              </td>
                             </tr>
                           ))}
                       </tbody>
@@ -125,7 +136,7 @@ const EditPay = () => {
                   </div>
                 </div>
                 <div className="col-2">
-                  <div className="card mt-5 p-3" style={{ width: '300px' }}> 
+                  <div className="card mt-5 p-3" style={{ width: '300px' }}>
                     <h4 className="card-title">Payment Summary</h4>
                     <div className="card-body">
                       <div className="d-flex justify-content-between mb-3">

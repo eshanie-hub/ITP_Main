@@ -13,7 +13,7 @@ const ManagingDirector_view = () => {
   const [deletedEmpId, setDeletedEmpId] = useState("");
   const [deletedEmpPosition, setDeletedEmpPosition] = useState("");
   const [showResignedAlert, setShowResignedAlert] = useState(false);
- // const [deletedEmployee, setDeletedEmployee] = useState(null);
+
 
  //pdf download function
 const pdfRef = useRef();
@@ -58,8 +58,7 @@ const downloadPDF = () => {
   const onDelete = (id) => {
     axios.delete(`http://localhost:8000/empDetails/delete/${id}`)
     .then((res) =>{
-        //alert("Emp Id :  "+deletedEmpId +" Position: "+ deletedEmpPosition + " is resigned ")
-         // Refresh emp details list after deleted
+        
          axios.get("http://localhost:8000/empDetails/").then(res =>{
           if(res.data){
             setState({
@@ -87,10 +86,9 @@ const downloadPDF = () => {
             <br/>
             {showResignedAlert &&  (
         <div className="alert alert-danger alert-dismissible fade show" role="alert">
-          {deletedEmpId} Employee has been deleted from system and assign new employee for that  {deletedEmpPosition} Position. 
-                                                                                             
-             <button type="button" class="close" data-dismiss="alert" aria-label="Close"
-             onClick={() => window.location.href = "../../pages/employee_manage/View"}>
+          {deletedEmpId} Employee has been deleted from system and assign new employee for that  {deletedEmpPosition} Position.
+          .                                                                       .                                                                             
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"  onClick={() => window.location.href = "../../pages/employee_manage/View"}>
              
               <span aria-hidden="true" onClick={() => setShowResignedAlert(false)}>&times;</span>
             </button>
@@ -132,12 +130,13 @@ const downloadPDF = () => {
               </tbody>
             </table>
             </div>
-            <button className='btn btn-primary mt-5'  style={{backgroundColor: "#c1b688 "}} type='submit'>
-              <a href="./report"  style={{ textDecoration: 'none', color:'white'}}>Report</a>
+            <div className='mt-5'>
+            <button className='btn me-2'  style={{backgroundColor: "#c1b688 "}} type='submit'>
+              <a href="./report"  style={{ textDecoration: 'none', color:'black',fontWeight:'bold'}}>Report</a>
             </button>
-            <br/><br/><br/>
-            <button className='btn btn-primary' style={{backgroundColor: "#c1b688 "}}
+            <button className='btn ' style={{backgroundColor: "#c1b688 ",textDecoration:'none',color:'black'}}
              onClick={downloadPDF}>Download PDF</button>
+             </div>
           </div>
 
         </div>

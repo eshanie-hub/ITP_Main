@@ -69,6 +69,7 @@ import AddDistributor from './pages/distributor/AddDistributor.js'
 import EditDistributor from './pages/distributor/EditDistributor.js'
 import CustomerReport from './pages/customer/CustomerReport.js'
 import EditCustomer from './pages/customer/EditCustomer.js'
+import UpdatePay from './pages/payment/updatePay.js'
 
 const App = () => {
 
@@ -108,7 +109,8 @@ const App = () => {
             <Route path="/pages/inventory/edit/:id" element={isAuth ? <EditItem /> : <Home /> }></Route>
 
             {/* Payment */}
-            <Route path="/pages/payment/add/:id" element={isAuth ? <PaymentAdd /> : <Home /> }></Route>        
+            <Route path="/pages/payment/add/:id" element={isAuth ? <PaymentAdd /> : <Home /> }></Route> 
+            <Route path="/pages/payment/update/:id" element={isAuth ? <UpdatePay /> : <Home /> }></Route>       
             <Route path="/pages/payment/report" element={isAuth ? <PaymentReport /> : <Home /> }></Route>
             <Route path="/pages/payment/edit/:id" element={isAuth ? <EditPay /> : <Home /> }></Route>
             <Route path="/pages/payment/CreditManager_view" element={isAuth ? <CreditManagerPayment /> : <Home /> }></Route>

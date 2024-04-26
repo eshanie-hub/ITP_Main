@@ -43,13 +43,9 @@ const downloadPDF = () => {
 };
 
 // Array of colors for each department
- const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7f0e', '#ff5500', '#8dd1e1', '#82ca9d']
+ const COLORS = ['#4363d8 ', '#3cb44b', '#f032e6', '#911eb4', '#469990', '#f58231', '#42d4f4']
 
- // Array of month names
-const monthNames = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-];
+
  //Calculate employee count for each department
  const departmentCounts = state.empDetails.reduce((counts,empDetails) =>{
   const department = empDetails.department
@@ -64,24 +60,7 @@ const monthNames = [
   fill: COLORS[index % COLORS.length] // Assign different colors for each department
 }))
 
-//get extreact month from joined date
-const getMonthFromDate = (date) =>{
-  const monthPart = parseInt(date.substring(5,7))
-  return monthPart  // Extract month component and convert to integer
-}
 
-//calculate employee count for each month
-const monthCount = state.empDetails.reduce((counts,empDetails) =>{
-  const month = getMonthFromDate(empDetails.joinedDate)
-  counts[month] = (counts[month]|| 0) +1
-  return counts;
-},{})
-
-//convert monthly counts to an array of objects for rechart data
-const data = Object.keys(monthCount).map((month) => ({
-  Month :monthNames[ parseInt(month)- 1],
-  EmployeeCount:monthCount[month]
-}))
 
   return (
     <>
@@ -111,7 +90,6 @@ const data = Object.keys(monthCount).map((month) => ({
         
         </BarChart>
       </div>
-      
         )}
 
      {state.empDetails && state.empDetails.length > 0 && (
@@ -135,14 +113,16 @@ const data = Object.keys(monthCount).map((month) => ({
             )}
 
           </div>
-         
-            <button className='btn btn-primary mt-5' style={{backgroundColor: "#c1b688 "}}
-             type='submit'>
-            <a href="./ManagingDirector_view" style={{backgroundColor: "#c1b688 ", textDecoration: 'none', color:'white'}}>Back</a>
+
+          <div className='mt-5'>
+            <button className='btn me-2' style={{backgroundColor: "#c1b688 "}} type='submit'>
+            <a href="./ManagingDirector_view" style={{backgroundColor: "#c1b688 ", textDecoration: 'none', color:'black',fontWeight:'bold'}}>
+              Back</a>
             </button>
-            <br/> <br/> <br/>
-            <button className='btn btn-primary' style={{backgroundColor: "#c1b688 "}}
+            <button className='btn ' style={{backgroundColor: "#c1b688 ",textDecoration:'none',color:'black'}}
              onClick={downloadPDF}>Download PDF</button>
+
+             </div>
         </div>
         </div>
       </div>
