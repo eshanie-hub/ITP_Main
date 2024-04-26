@@ -25,14 +25,14 @@ const View = () => {
 
   const calculateRemainingCredit = (customerName) => {
     const totalCredit = state.order_placement
-      .filter((order) => order.orderType === 'credit' && order.orderStatus === 'approved' && order.customerName === customerName)
-      .reduce((acc, order) => acc + order.amount, 0);
+     .filter((order) => order.orderType === 'credit' && order.orderStatus === 'approved' && order.customerName === customerName)
+     .reduce((acc, order) => acc + order.amount, 0);
       
     console.log('Total credit for', customerName, ':', totalCredit);
       
     const totalPaymentAmount = state.payment
-      .filter((payment) => payment.CustomerName === customerName)
-      .reduce((acc, payment) => acc + payment.Payment, 0);
+     .filter((payment) => payment.CustomerName === customerName)
+     .reduce((acc, payment) => acc + payment.Payment, 0);
 
     console.log('Total payment amount for', customerName, ':', totalPaymentAmount);
       
@@ -41,10 +41,14 @@ const View = () => {
 
   const onDelete = (id) => {
     axios.delete(`http://localhost:8000/payment/delete/${id}`)
-      .then((res) => {
+     .then((res) => {
         alert("Deleted successfully");
       })
   }
+
+  const filteredOrders = state.order_placement.filter((order) => {
+    return order.customerName.toLowerCase().includes(search.toLowerCase());
+  });
 
   return (
     <>
@@ -64,9 +68,9 @@ const View = () => {
                 </tr>
               </thead>
               <tbody>
-                {state.order_placement
-                  .filter((order) => order.orderType === 'credit' && order.orderStatus === 'approved')
-                  .map((order, index) => (
+                {filteredOrders
+                 .filter((order) => order.orderType === 'credit' && order.orderStatus === 'approved')
+                 .map((order, index) => (
                     <tr key={index}>
                       <td>{order.customerName}</td>
                       <td>{calculateRemainingCredit(order.customerName)}</td>

@@ -95,7 +95,7 @@ const AddPay = () => {
         Date: state.Date,
         Payment: state.Payment,
         CustomerName: state.CustomerName,
-        RemainingCredit: remainingCredit - state.Payment  // Adjust remaining credit
+        RemainingCredit: remainingCredit - state.Payment  
       };
   
       // Send the data to the server
