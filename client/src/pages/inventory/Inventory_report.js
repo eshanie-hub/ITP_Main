@@ -47,7 +47,7 @@ const downloadPDF = () => {
       <div class="row flex-nowrap">
         <div class="col py-3">
           <div ref={pdfRef}>
-        <h2 class="my-5 text-center">Inventory Stock count report</h2>
+        <h2 class="my-5">Inventory Stock count report</h2>
         
         {state.inventory && state.inventory.length > 0 && (
           <div>
