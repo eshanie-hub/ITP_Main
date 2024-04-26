@@ -89,12 +89,13 @@ const downloadPDF = () => {
                 </tbody>
                 </table>
                 </div>
-                <button className='btn btn-primary mt-5'  style={{backgroundColor: "#c1b688 "}} type='submit' >
-              <a href="./report"  style={{textDecoration: 'none', color:'white'}}>Report</a>
+                <div className='mt-5'>
+            <button className='btn me-2'  style={{backgroundColor: "#c1b688 "}} type='submit'>
+              <a href="./report"  style={{ textDecoration: 'none', color:'black',fontWeight:'bold'}}>Report</a>
             </button>
-          <br/><br/><br/>
-            <button className='btn btn-primary' style={{backgroundColor: "#c1b688 "}}
+            <button className='btn ' style={{backgroundColor: "#c1b688 ",textDecoration:'none',color:'black'}}
              onClick={downloadPDF}>Download PDF</button>
+             </div>
         </div>
     </div>
 </div>
