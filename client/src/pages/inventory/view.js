@@ -20,7 +20,7 @@ const View = () => {
   return (
     <>
       <div class="col">
-          <Header dashboard={"Inventory Management System"} setSearch={setSearch}/>
+          <Header dashboard={"Inventory Control Management"} setSearch={setSearch}/>
       </div>
       <div class="container-fluid">
         <div class="row flex-nowrap">
