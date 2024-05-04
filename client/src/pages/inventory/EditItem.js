@@ -20,7 +20,7 @@ export const EditItem = () => {
 
       const validateValues = (inputValues) => {
         let errors = {};
-       
+       //color should be string, can't be null
         if (inputValues.color.length < 1) {
           errors.color = "color is too short";
         }
@@ -28,6 +28,7 @@ export const EditItem = () => {
           errors.color = "color should be a string";
         }
         
+        //size should be number, can't be null, can't be negative
         if (inputValues.size < 1) {
           errors.size = "size can't be negative";
         }
@@ -39,6 +40,7 @@ export const EditItem = () => {
           errors.size = "size is too short";
         }
         
+        //price should be number, can't be null, can't be negative
         if (inputValues.price < 1) {
           errors.price = "price can't be negative";
         }
@@ -54,6 +56,7 @@ export const EditItem = () => {
           errors.price = "price can't be negative";
         }
 
+        //stockCount should be number, can't be null, can't be negative
         if (inputValues.stockCount.length < 1) {
           errors.stockCount = "stockCount is too short";
         }
@@ -65,6 +68,8 @@ export const EditItem = () => {
         if (isNaN(inputValues.stockCount)) {
           errors.stockCount = "Should be a number";
         }
+
+        //reorderPoint should be number, can't be null, can't be negative
         if (inputValues.reorderPoint < 1) {
           errors.reorderPoint = "reorderPoint can't be negative";
         }

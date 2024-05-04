@@ -45,10 +45,10 @@ const AddItem = () => {
     
       const validateValues = (inputValues) => {
         let errors = {};
+        //itemno validation starts with p, lenght should be more than 4 and can't be already existing
         if (!inputValues.itemNo.toLowerCase().startsWith("p")) {
           errors.itemNo = "itemNo should start with p";
         }
-
         if (inputValues.itemNo.length < 4) {
           errors.itemNo = "itemNo is too short";
         }
@@ -56,22 +56,25 @@ const AddItem = () => {
         if (exsistingNo(inputValues.itemNo) === true) {
           errors.itemNo = "itemNo already exist";
         }
-
+        
+        //itemname can't be already existing, can't be null
         if(exsistingName(inputValues.itemName) === true){
           errors.itemName = "itemName already exists";
         }
         if (inputValues.itemName.length < 1) {
-          errors.itemName = "itemName is too short";
+          errors.itemName = "itemName can't be null";
         }
 
+        //color should be string, can't be null
         if (/\d/.test(inputValues.color)) {
           errors.color = "color should be a string";
         }
 
         if (inputValues.color.length < 1) {
-          errors.color = "color is too short";
+          errors.color = "color can't be null";
         }
         
+        //size should be number, can't be null, can't be negative
         if (inputValues.size < 1) {
           errors.size = "size can't be negative";
         }
@@ -83,6 +86,7 @@ const AddItem = () => {
           errors.size = "size is too short";
         }
         
+        //price should be number, can't be null, can't be negative
         if (inputValues.price < 1) {
           errors.price = "price can't be negative";
         }
@@ -94,10 +98,7 @@ const AddItem = () => {
           errors.price = "price should be a number";
         }
 
-        if (inputValues.price < 1) {
-          errors.price = "price can't be negative";
-        }
-
+        //stockCount should be number, can't be null, can't be negative
         if (inputValues.stockCount.length < 1) {
           errors.stockCount = "stockCount is too short";
         }
@@ -109,6 +110,8 @@ const AddItem = () => {
         if (isNaN(inputValues.stockCount)) {
           errors.stockCount = "Should be a number";
         }
+
+        //reorderPoint should be number, can't be null, can't be negative
         if (inputValues.reorderPoint < 1) {
           errors.reorderPoint = "reorderPoint can't be negative";
         }
