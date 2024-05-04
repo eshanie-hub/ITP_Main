@@ -30,7 +30,7 @@ useEffect(() => {
   return (
     <>
       <div class="col">
-          <Header dashboard={"Order Placement System"}setSearch={setSearch} />
+          <Header dashboard={"Order Placement Management"}setSearch={setSearch} />
       </div>
       <div class="container-fluid">
         <div class="row flex-nowrap">
