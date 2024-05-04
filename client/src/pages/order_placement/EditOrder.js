@@ -18,6 +18,7 @@ const EditOrder = () => {
       })
       const [errors, setErrors] = useState({});
       const [submitting, setSubmitting] = useState(false);
+      //form validation
 
       const validateValues = (inputValues) => {
         let errors = {};
@@ -30,21 +31,42 @@ const EditOrder = () => {
         if (inputValues.products.length < 1) {
           errors.products = "products is too short";
         }
+        //positive number validation for orderNo
+        if (inputValues.orderNo < 1) {
+          errors.orderNo = "orderNo can't be Negetive";
+        }
+        
         if (inputValues.orderNo.length < 1) {
           errors.orderNo = "orderNo is too short";
         }
+          
+        if (isNaN(inputValues.orderNo)) {
+          errors.orderNo = "OrderNo must be a positive number";
+         }
+       
         if (inputValues.orderType.length < 1) {
           errors.orderType = "orderType is too short";
         }
-        if (inputValues.amount.length < 1) {
-          errors.amount = "amount is required";
+        //positive validation for amount
+        if (inputValues.amount < 1) {
+          errors.amount = "Amount can't be Negetive";
         }
+        
+        if (inputValues.amount.length < 1) {
+          errors.amount = "amount is too short";
+        }
+        if (isNaN(inputValues.amount)) {
+          errors.amount = "Amount must be a positive number";
+        }
+      
+        
         if (inputValues.date.length < 1) {
           errors.date = "date is required";
         }
         if (inputValues.orderStatus.length < 1) {
           errors.orderStatus = "orderStatus is required";
         }
+        
         return errors;
       };
     
@@ -115,7 +137,7 @@ const EditOrder = () => {
   return (
     <>
       <div class="col">
-          <Header dashboard={"Order Placement System"} />
+          <Header dashboard={"Order Placement Management"} />
       </div>
       <div class="container-fluid">
         <div class="row flex-nowrap">
@@ -140,7 +162,7 @@ const EditOrder = () => {
         />
         {errors.customerName && (
           <div class="text-danger mt-2">
-            customerName should have 4 characters
+            {errors.customerName}
           </div>)}
     </div>
     <div class="col-6">
@@ -155,7 +177,7 @@ const EditOrder = () => {
         />
         {errors.distributorName && (
           <div class="text-danger mt-2">
-            distributorName should have 4 characters
+          {errors.distributorName}
           </div>)}
     </div>
   </div>
@@ -172,7 +194,7 @@ const EditOrder = () => {
         />
         {errors.preventDefault && (
           <div class="text-danger mt-2">
-            products should have 4 characters
+           {errors.products}
           </div>)}
     </div>
     <div class="col">
@@ -187,7 +209,7 @@ const EditOrder = () => {
         />
         {errors.orderNo && (
           <div class="text-danger mt-2">
-            orderNo should have 4 characters
+            {errors.orderNo}
           </div>)}
     </div>
     <div class="col">
@@ -202,7 +224,7 @@ const EditOrder = () => {
         />
         {errors.orderType && (
           <div class="text-danger mt-2">
-            orderType should have 4 characters
+            {errors.orderType}
           </div>)}
     </div>
    
@@ -218,7 +240,7 @@ const EditOrder = () => {
         />
         {errors.amount && (
           <div class="text-danger mt-2">
-            amount can't be null
+         {errors.amount}
           </div>)}
     </div>
     <div class="col">
@@ -233,7 +255,7 @@ const EditOrder = () => {
         />
         {errors.date && (
           <div class="text-danger mt-2">
-            date can't be null
+           {errors.date}
           </div>)}
     </div>
     <div class="col">
@@ -248,7 +270,7 @@ const EditOrder = () => {
         />
         {errors.orderStatus && (
           <div class="text-danger mt-2">
-            orderStatus can't be null
+            {errors.orderNo}
           </div>)}
     </div>
 

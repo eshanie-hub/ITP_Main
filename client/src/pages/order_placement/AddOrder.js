@@ -18,6 +18,7 @@ const AddOrder = () => {
 
       const [errors, setErrors] = useState({});
       const [submitting, setSubmitting] = useState(false);
+      // form validation
     
       const validateValues = (inputValues) => {
         let errors = {};
@@ -30,21 +31,39 @@ const AddOrder = () => {
         if (inputValues.products.length < 1) {
           errors.products = "products is too short";
         }
+        //positive number validation fo order number
+        if (inputValues.orderNo < 1) {
+          errors.orderNo = "orderNo can't be Negetive";
+        }
+        
         if (inputValues.orderNo.length < 1) {
           errors.orderNo = "orderNo is too short";
         }
+          
+        if (isNaN(inputValues.orderNo)) {
+          errors.orderNo = "OrderNo must be a positive number";
+         }
         if (inputValues.orderType.length < 1) {
           errors.orderType = "orderType is too short";
         }
+        // positive number validation for amount
+        if (inputValues.amount < 1) {
+          errors.amount = "Amount can't be Negetive";
+        }
+        
         if (inputValues.amount.length < 1) {
           errors.amount = "amount is too short";
         }
+        if (isNaN(inputValues.amount)) {
+          errors.amount = "Amount must be a positive number";
+        }
         if (inputValues.date.length < 1) {
           errors.date = "date is too short";
         }
         if (inputValues.orderStatus.length < 1) {
           errors.orderStatus = "orderStatus is too short";
         }
+     
         return errors;
       };
 
@@ -96,7 +115,7 @@ const AddOrder = () => {
     <>
     <div class="col">
 
-        <Header dashboard={"Order Placement System"} />
+        <Header dashboard={"Order Placement Management"} />
 
     </div>
     <div class="container-fluid">
@@ -123,7 +142,7 @@ const AddOrder = () => {
         />
         {errors.customerName && (
           <div class="text-danger mt-2">
-            customerName should have 4 characters
+            {errors.customerName}
           </div>)}
     </div>
     <div class="col-6">
@@ -138,7 +157,7 @@ const AddOrder = () => {
         />
         {errors.distributorName && (
           <div class="text-danger mt-2">
-            distributorName should have 4 characters
+            {errors.distributorName}
           </div>)}
     </div>
   </div>
@@ -155,7 +174,7 @@ const AddOrder = () => {
         />
         {errors.products && (
           <div class="text-danger mt-2">
-            products can't be null
+          {errors.products}
           </div>
           )}
     </div>
@@ -171,7 +190,7 @@ const AddOrder = () => {
         />
         {errors.orderNo && (
           <div class="text-danger mt-2">
-            orderNo can't be null
+            {errors.orderNo}
           </div>
           )}
     </div>
@@ -187,7 +206,7 @@ const AddOrder = () => {
         />
         {errors.orderType && (
           <div class="text-danger mt-2">
-            OrderType can't be null
+            {errors.orderType}
           </div>
           )}
     </div>
@@ -203,7 +222,8 @@ const AddOrder = () => {
         />
         {errors.amount && (
           <div class="text-danger mt-2">
-            amount can't be null
+            
+            {errors.amount}
           </div>
           )}
 
@@ -220,7 +240,8 @@ const AddOrder = () => {
         />
         {errors.date && (
           <div class="text-danger mt-2">
-            date can't be null
+         
+         {errors.date}
           </div>
           )}
     </div>
@@ -237,7 +258,7 @@ const AddOrder = () => {
         />
         {errors.orderStatus && (
           <div class="text-danger mt-2">
-            orderStatus can't be null
+         {errors.orderStatus}
           </div>
           )}
     </div>
