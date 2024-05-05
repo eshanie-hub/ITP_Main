@@ -91,7 +91,7 @@ const Payment_report = () => {
   return (
     <>
       <div className="col">
-        <Header dashboard={'Customer Payment History System'} />
+        <Header dashboard={'Customer Payment History Management'} />
       </div>
       <div className="container-fluid">
         <div className="row flex-nowrap">

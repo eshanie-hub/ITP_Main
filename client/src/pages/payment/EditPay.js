@@ -61,7 +61,7 @@ const EditPay = () => {
   return (
     <>
       <div className="col">
-        <Header dashboard={"Payment history Management System"} />
+        <Header dashboard={"Payment history Management"} />
       </div>
       <div className="container-fluid">
         <div className="row flex-nowrap">
