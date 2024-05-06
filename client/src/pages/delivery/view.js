@@ -33,7 +33,7 @@ useEffect(() => {
     <>
       <div class="col">
 
-          <Header dashboard={"Delivery Management System"} setSearch={setSearch} />
+          <Header dashboard={"Delivery Management"} setSearch={setSearch} />
 
       </div>
       <div class="container-fluid">

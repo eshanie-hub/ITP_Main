@@ -45,7 +45,7 @@ const Operator_view = () => {
   return (
     <>
       <div className="col">
-        <Header dashboard={"Delivery Management System"} setSearch={setSearch} />
+        <Header dashboard={"Delivery Management"} setSearch={setSearch} />
       </div>
       <div className="container-fluid">
         <div className="row flex-nowrap">

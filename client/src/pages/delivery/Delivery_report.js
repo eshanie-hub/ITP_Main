@@ -55,7 +55,7 @@ const Delivery_report = () => {
   return (
     <>
       <div className="col">
-        <Header dashboard={"Delivery Management System"} />
+        <Header dashboard={"Delivery Management"} />
       </div>
       <div className="container-fluid">
         <div className="row flex-nowrap">

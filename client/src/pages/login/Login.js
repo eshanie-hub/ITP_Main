@@ -61,24 +61,24 @@ const handleForm = (e) => {
 
     dispatch(setLogin({ emp_id }));
 
-    navigate(`../../pages/employee_manage/${getRedirectPath(emp_id)}`);
+    navigate(`../../pages/${getRedirectPath(emp_id)}`);
     alert("Login Successfully");
 };
 
     const getRedirectPath = (emp_id) => {
       switch (true) {
         case emp_id.startsWith('op'):
-          return 'Operator_view';
+          return 'employee_manage/Operator_view';
         case emp_id.startsWith('fa'):
-          return 'Factory_view';
+          return 'inventory/Factory_view';
         case emp_id.startsWith('as'):
-          return 'Assistant';
+          return 'payment/Assistant';
         case emp_id.startsWith('se'):
-          return 'SalesExecutive_view';
+          return 'delivery/SalesExecutive_view';
         case emp_id.startsWith('md'):
-          return 'ManagingDirector_view';
+          return 'employee_manage/ManagingDirector_view';
         case emp_id.startsWith('cm'):
-          return 'CreditManager_view';
+          return 'employee_salary/CreditManager_view';
         default:
           return '';
       }

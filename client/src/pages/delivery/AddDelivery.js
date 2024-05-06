@@ -87,7 +87,7 @@ const AddDelivery = () => {
     <>
     <div class="col">
 
-        <Header dashboard={"Delivery Management System"} />
+        <Header dashboard={"Delivery Management"} />
 
     </div>
     <div class="container-fluid">
