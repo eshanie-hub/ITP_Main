@@ -67,7 +67,7 @@ const EditCustomer = () => {
   return (
     <>
       <div className="col">
-        <Header dashboard={"Customer Care System"} />
+        <Header dashboard={"Customer Care Management"} />
       </div>
       <div className="container-fluid">
         <div className="row flex-nowrap">
@@ -118,7 +118,10 @@ const EditCustomer = () => {
               <div className="col">
                 <label className="form-label">Mail</label>
                 <div className="d-flex align-items-center">
-                  <button className="btn btn-light me-2" onClick={openMailbox}>
+                  <button
+                    className="btn btn-secondary me-2"
+                    onClick={openMailbox}
+                  >
                     {state.mail}
                   </button>
                 </div>

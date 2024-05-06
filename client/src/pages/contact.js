@@ -217,7 +217,7 @@ const Contact = () => {
         </div>
 
         <div
-          className="row"
+          className="row mt-5 mb-5 mx-5 align-self-center"
           style={{
             position: "relative",
             top: "100px",
