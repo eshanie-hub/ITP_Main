@@ -20,17 +20,20 @@ export const EditSalary = () => {
 
   const validateValues = (inputValues) => {
     let errors = {};
-    if (isNaN(inputValues.EmpId) || inputValues.EmpId.length < 3) {
-      errors.EmpId = "Employee ID must be a valid number";
+    //Number Validations
+    if (isNaN(inputValues.EmpId) || inputValues.EmpId.length < 3  || inputValues.EmpId < 0) {
+      errors.EmpId = "Employee ID must be a valid positive number";
     }
     if (inputValues.EmpName.length < 4) {
       errors.EmpName = "Employee Name is too short";
     }
+    //String Validations
     if (typeof inputValues.EmpName !== 'string') {
       errors.EmpName = "Employee Name must be a string";
     }
-    if (isNaN(inputValues.BasicSalary) || inputValues.BasicSalary.length < 1) {
-      errors.BasicSalary = "Basic Salary must be a valid number";
+    //Number validations
+    if (isNaN(inputValues.BasicSalary) || inputValues.BasicSalary.length < 1 || inputValues.BasicSalary < 0) {
+      errors.BasicSalary = "Basic Salary must be a valid positive number";
     }
     return errors;
   };
@@ -128,6 +131,7 @@ export const EditSalary = () => {
                     placeholder="Enter EmpId"
                     value={state.EmpId}
                     onChange={handleChange}
+                    disabled //can't update
                   />
                   {errors.EmpId && (
                     <div className="text-danger mt-2">

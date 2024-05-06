@@ -44,8 +44,8 @@ const AddEmployee = () => {
         if (inputValues.address.length < 5) {
           errors.address = "Please enter a valid address";
         }
-        if (!/^(0|[1-9])[0-9]{9}$/.test(inputValues.contactNumber)){
-          errors.contactNumber = "Contact Number should be 10 digits";
+        if (!/^0[0-9]{9}$/.test(inputValues.contactNumber)){
+          errors.contactNumber = "Contact Number should start with 0 and have 10 digits";
         }
         const positionLetter =/^[A-Za-z]+$/
         if (!positionLetter.test(inputValues.position)) {
@@ -56,15 +56,22 @@ const AddEmployee = () => {
           errors.department = "Department must contain only letters";
         }
         if (!inputValues.joinedDate || inputValues.joinedDate.length < 1) {
-          errors.joinedDate = "Joined date is required";
+          errors.joinedDate = "Joined date is Invalid or at least 20 years after the birthdate";
         } else {
+          const dob = new Date(inputValues.dateOfBirth);
           // Validate if the date is in a valid format and a realistic date
           const joinedDate = new Date(inputValues.joinedDate);
-          const isValidJoinedDate = !isNaN(joinedDate.getTime()); // Check if it's a valid date
-          const isRealisticJoinedDate = joinedDate <= new Date(); // Check if it's not a future date
+          const ageDifference = new Date();
+          ageDifference.setFullYear(ageDifference.getFullYear() - 20);
+           if (dob > ageDifference || dob > joinedDate) {
+            errors.joinedDate = "Joined date should be at least 20 years after the birthdate";
+          } else {
+            const isValidJoinedDate = !isNaN(joinedDate.getTime());
+            const isRealisticJoinedDate = joinedDate <= new Date();
       
-          if (!isValidJoinedDate || !isRealisticJoinedDate) {
-            errors.joinedDate = "Invalid Joined Date";
+            if (!isValidJoinedDate || !isRealisticJoinedDate) {
+              errors.joinedDate = "Invalid Joined Date";
+            }
           }
         }
         return errors;
@@ -117,7 +124,7 @@ const AddEmployee = () => {
   return (
     <>
     <div class="col">
-        <Header dashboard={"Employee Management System"} />
+        <Header dashboard={"Employee Management"} />
     </div>
     <div class="container-fluid">
       <div class="row flex-nowrap">
@@ -210,7 +217,7 @@ const AddEmployee = () => {
         />
          {errors.contactNumber && (
           <div class="text-danger mt-2">
-            Contact Number should be 10 digits
+            Contact Number should start with 0 and have 10 digits
           </div>
           )}
     </div>
@@ -258,7 +265,7 @@ const AddEmployee = () => {
         />
          {errors.joinedDate && (
           <div class="text-danger mt-2">
-            Joined date is required
+            Joined date is Invalid or at least 20 years after the birthdate
           </div>
           )}
     </div>

@@ -53,12 +53,12 @@ const View = () => {
   return (
     <>
       <div className="col">
-        <Header dashboard={"Customer Payment History System"} setSearch={setSearch} />
+        <Header dashboard={" Payment History Management"} setSearch={setSearch} />
       </div>
       <div className="container-fluid">
         <div className="row flex-nowrap">
           <div className="col py-3">
-            {/* details */}
+           
             <table className="table table-striped">
               <thead>
                 <tr>
