@@ -51,7 +51,7 @@ useEffect(() => {
   return (
     <>
     <div class="col">
-        <Header dashboard={"Distributor Management System"} setSearch={setSearch}/>
+        <Header dashboard={"Distributor Management"} setSearch={setSearch}/>
     </div>
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
     <strong><h2>Expired Agreements</h2></strong> 

@@ -82,8 +82,9 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
     <div class="col">
         <Header dashboard={"Distributor Management System"} />
     </div>
-    <div>
     <div ref={pdfRef}>
+    <div>
+    <div>
       <h4>Distributor Credit Limit Distribution</h4>
       <table class="table">
         <thead>
@@ -128,6 +129,8 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
         
         </div>
         </div>
+        </div>
+        </div>
         <div className="mt-5">
             <button className='btn me-2' style={{backgroundColor: "#c1b688 "}} onClick={downloadPDF}>Download PDF</button>
     
@@ -136,7 +139,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
             </button>
             </div>
         </div>
-        </div>
+        
       
     </>
   )
