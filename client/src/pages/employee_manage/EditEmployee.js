@@ -61,9 +61,9 @@ const EditEmployee = () => {
         const dob = new Date(inputValues.dateOfBirth);
         // Validate if the date is in a valid format and a realistic date
         const joinedDate = new Date(inputValues.joinedDate);
-        const ageDifference = new Date();
-        ageDifference.setFullYear(ageDifference.getFullYear() - 20);
-         if (dob > ageDifference || dob > joinedDate) {
+        const ageDifference = new Date(dob);
+        ageDifference.setFullYear(ageDifference.getFullYear() + 20);
+         if (joinedDate < ageDifference) {
           errors.joinedDate = "Joined date should be at least 20 years after the birthdate";
         } else {
           const isValidJoinedDate = !isNaN(joinedDate.getTime());
