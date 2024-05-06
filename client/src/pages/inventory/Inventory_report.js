@@ -3,7 +3,7 @@ import Header from '../../component/Header';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import axios from 'axios';
-import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 const Inventory_report = () => {
   const [state, setState] = useState({
@@ -41,13 +41,14 @@ const downloadPDF = () => {
   return (
     <>
     <div class="col">
-        <Header dashboard={"Inventory Management System"} />
+        <Header dashboard={"Inventory Control Management"} />
     </div>
     <div class="container-fluid">
-      <div class="row flex-nowrap">
-        <div class="col py-3">
-          <div ref={pdfRef}>
-        <h2 class="my-5">Inventory Stock count report</h2>
+      <div class="row flex-nowrap ">
+        <div class="col py-3 ">
+          <div style={{ width: '100%', height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div ref={pdfRef} >
+        <h2 class="my-5 text-center">Inventory Stock count report</h2>
         
         {state.inventory && state.inventory.length > 0 && (
           <div>
@@ -67,7 +68,8 @@ const downloadPDF = () => {
       </div>
         )}
         </div>
-          <div className='mt-5'>
+          </div>
+          <div className='mt-5' >
             <button className='btn me-2' style={{backgroundColor: "#c1b688 "}} type='submit'>
             <a href="./ManagingDirector_view"  style={{textDecoration: 'none', color:'black'}}>Back</a>
             </button>

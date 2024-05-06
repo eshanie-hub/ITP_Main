@@ -1,11 +1,11 @@
-import React from 'react'
-import { useNavigate } from "react-router-dom"
-import { useState } from "react"
-import NavBar from '../../component/NavBar'
-import SideMenuControl from '../../component/SideMenuControl'
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import NavBar from "../../component/NavBar";
+import SideMenuControl from "../../component/SideMenuControl";
 import { useDispatch } from "react-redux";
-import { setLogin, setMenu }  from "../../state/state";
-import Manager from '../../component/sideMenus/Operator'
+import { setLogin, setMenu } from "../../state/state";
+import Manager from "../../component/sideMenus/Operator";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -21,8 +21,8 @@ const Login = () => {
   });
   
 
-  const handleChange = (e) => { 
-    const {name, value} = e.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
   setState({...state,[name]:value});
   setErrors({ ...errors, [`${name}Error`]: '' });
@@ -132,19 +132,18 @@ const handleForm = (e) => {
                     <div class="pt-1 mb-4">
                       <button class="btn btn-lg btn-block" type="button" style={{backgroundColor: "#c1b688 "}} onClick={handleForm}>Login</button>
                     </div>
-                  </form>
-  
+                    </form>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-       
-  </>
-  )
-}
+      </section>
+                
+    </>
+  );
+};
 
-export default Login
+export default Login;
