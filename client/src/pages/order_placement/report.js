@@ -52,7 +52,7 @@ const downloadPDF = () => {
     <>
     <div class="col">
 
-        <Header dashboard={"Order Placement System"} />
+        <Header dashboard={"Order Placement Management"} />
 
     </div>
     <div class="container-fluid">

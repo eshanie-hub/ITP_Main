@@ -20,26 +20,65 @@ export const EditItem = () => {
 
       const validateValues = (inputValues) => {
         let errors = {};
-        if (inputValues.itemNo.length < 4) {
-          errors.itemNo = "itemNo is too short";
-        }
-        if (inputValues.itemName.length < 1) {
-          errors.itemName = "itemName is too short";
-        }
+       //color should be string, can't be null
         if (inputValues.color.length < 1) {
           errors.color = "color is too short";
         }
+        if (/\d/.test(inputValues.color)) {
+          errors.color = "color should be a string";
+        }
+        
+        //size should be number, can't be null, can't be negative
+        if (inputValues.size < 1) {
+          errors.size = "size can't be negative";
+        }
+        if (!/^(\d+)x(\d+)$/.test(inputValues.size)) {
+          errors.size = "size should be a number";
+        }
+
         if (inputValues.size.length < 1) {
           errors.size = "size is too short";
         }
+        
+        //price should be number, can't be null, can't be negative
+        if (inputValues.price < 1) {
+          errors.price = "price can't be negative";
+        }
+        
         if (inputValues.price.length < 1) {
           errors.price = "price is too short";
         }
+        if (isNaN(inputValues.price)) {
+          errors.price = "price should be a number";
+        }
+
+        if (inputValues.price < 1) {
+          errors.price = "price can't be negative";
+        }
+
+        //stockCount should be number, can't be null, can't be negative
         if (inputValues.stockCount.length < 1) {
           errors.stockCount = "stockCount is too short";
         }
+
+        if (inputValues.stockCount < 1) {
+          errors.stockCount = "stockCount can't be negative";
+        }
+
+        if (isNaN(inputValues.stockCount)) {
+          errors.stockCount = "Should be a number";
+        }
+
+        //reorderPoint should be number, can't be null, can't be negative
+        if (inputValues.reorderPoint < 1) {
+          errors.reorderPoint = "reorderPoint can't be negative";
+        }
+
         if (inputValues.reorderPoint.length < 1) {
           errors.reorderPoint = "reorderPoint is too short";
+        }
+        if (isNaN(inputValues.reorderPoint)) {
+          errors.reorderPoint = "reorderPoint should be a number";
         }
         return errors;
       };
@@ -106,7 +145,7 @@ export const EditItem = () => {
   return (
     <>
     <div class="col">
-        <Header dashboard={"Inventory Management System"} />
+        <Header dashboard={"Inventory Control Management"} />
     </div>
     <div class="container-fluid">
       <div class="row flex-nowrap">
@@ -114,7 +153,7 @@ export const EditItem = () => {
             <div class="mt-5 mb-5 ">
                 <h4>
                     <span class="badge" style={{backgroundColor: "#596584 "}}>
-                    Inventory Add 
+                    Inventory Update 
                     </span>
                 </h4>
             </div>
@@ -130,11 +169,8 @@ export const EditItem = () => {
         placeholder="Enter itemNo of the post"
         value={state.itemNo}
         onChange={handleChange}
+        disabled
         />
-        {errors.itemNo && (
-          <div class="text-danger mt-2">
-            ItemNo should have 4 characters
-          </div>)}
     </div>
     <div class="col-6">
     <label class="form-label">ItemName</label>
@@ -145,12 +181,8 @@ export const EditItem = () => {
         placeholder="Enter itemName of the post"
         value={state.itemName}
         onChange={handleChange}
+        disabled
         />
-        {errors.itemName && (
-          <div class="text-danger mt-2">
-            ItemName can't be null
-          </div>
-          )}
     </div>
   </div>
   <div class="row mt-4">
@@ -166,7 +198,7 @@ export const EditItem = () => {
         />
         {errors.color && (
           <div class="text-danger mt-2">
-            Color can't be null
+            {errors.color}
           </div>
           )}
     </div>
@@ -182,7 +214,7 @@ export const EditItem = () => {
         />
         {errors.size && (
           <div class="text-danger mt-2">
-            Size can't be null
+            {errors.size}
           </div>
           )}
     </div>
@@ -198,7 +230,7 @@ export const EditItem = () => {
         />
         {errors.price && (
           <div class="text-danger mt-2">
-            Price can't be null
+            {errors.price}
           </div>
           )}
     </div>
@@ -214,7 +246,7 @@ export const EditItem = () => {
         />
         {errors.stockCount && (
           <div class="text-danger mt-2">
-            StockCount can't be null
+            {errors.stockCount}
           </div>
           )}
     </div>
@@ -230,7 +262,7 @@ export const EditItem = () => {
         />
          {errors.reorderPoint && (
           <div class="text-danger mt-2">
-            reorderPoint can't be null
+            {errors.reorderPoint}
           </div>
           )}
     </div>

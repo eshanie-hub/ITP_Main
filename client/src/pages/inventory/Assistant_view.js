@@ -12,7 +12,7 @@ const Assistant_view = () => {
       if(data.stockCount < data.reorderPoint ){ 
         return (
           <div class="alert alert-warning mb-5" role="alert">
-            <span>item name:<b>{(index ? ', ' : '') + data.itemName}</b> is stockcount is low!</span>
+            <span>item name: <b>{data.itemName}</b> is stockcount is low!</span>
           </div>
         )
         
@@ -33,12 +33,27 @@ const Assistant_view = () => {
         }, [state]);
       
         const onDelete = (id) => {
-          axios.delete(`http://localhost:8000/inventory/delete/${id}`)
-          .then((res) => {
-            alert("Deleted successfully");
-            
-          })
+          const confirmDelete = window.confirm(
+          "Are you sure you want to delete this inquiry?"
+        );
+        if (confirmDelete) {
+          axios
+            .delete(`http://localhost:8000/inventory/delete/${id}`)
+            .then((res) => {
+              alert("Deleted successfully");
+              // Optionally, you can update the state after deletion
+              setState((prevState) => ({
+                inventory: prevState.inventory.filter(
+                  (item) => item._id !== id
+                ),
+              }));
+            })
+            .catch((error) => {
+              console.error("Error deleting inquiry:", error);
+              alert("Failed to delete inquiry");
+            });
         }
+      };
 
         const [search, setSearch] = useState("");
         // console.log(search);
@@ -46,7 +61,7 @@ const Assistant_view = () => {
   return (
     <>
       <div class="col">
-          <Header dashboard={"Inventory Management System"} setSearch={setSearch} />
+          <Header dashboard={"Inventory Control Management"} setSearch={setSearch} />
       </div>
       <div class="container-fluid pt-5">
         <div class="row flex-nowrap">
