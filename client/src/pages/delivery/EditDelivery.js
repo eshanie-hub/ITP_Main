@@ -105,7 +105,7 @@ setErrors(validateValues({...state, [name]: newValue}));
   return (
     <>
     <div class="col">
-        <Header dashboard={"Delivery Management System"}/>
+        <Header dashboard={"Delivery Management"}/>
     </div>
     <div class="container-fluid">
       <div class="row flex-nowrap">
