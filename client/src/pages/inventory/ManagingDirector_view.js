@@ -1,5 +1,4 @@
 import React from 'react'
-import Header from '../../component/Header';
 import View from './view';
 
 const ManagingDirector_view = () => {

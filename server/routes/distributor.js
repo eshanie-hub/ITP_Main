@@ -11,7 +11,7 @@ router.route("/add").post((req,res)=>{
     const phoneNo=Number(req.body.phoneNo);
     const creditLimit=Number(req.body.creditLimit);
     const  agreementStatus=req.body.agreementStatus;
-    const  date=Date(req.body.date);
+    const  date=req.body.date;
 
     const newdistributor=new distributor({
         distributorId,

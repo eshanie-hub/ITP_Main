@@ -58,17 +58,12 @@ const View = () => {
     }
   };
 
-  //report
   return (
     <>
       <div class="col">
-        <Header dashboard={"Customer Care System"} setSearch={setSearch} />
+        <Header dashboard={"Customer Care Management"} setSearch={setSearch} />
         {pendingInquiriesCount > 0 && (
-          <div
-            className="alert alert-info mt-3"
-            style={{ backgroundColor: "#c1b688 " }}
-            role="alert"
-          >
+          <div className="alert alert-warning mt-3" role="alert">
             You have {pendingInquiriesCount} pending inquiries to resolve..
           </div>
         )}

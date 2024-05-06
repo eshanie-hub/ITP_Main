@@ -90,7 +90,7 @@ const AddDistributor = () => {
   return (
     <>
     <div class="col">
-        <Header dashboard={"Distributor Management System"} />
+        <Header dashboard={"Distributor Management"} />
     </div>
     <div class="container-fluid">
       <div class="row flex-nowrap">

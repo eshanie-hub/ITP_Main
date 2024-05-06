@@ -66,12 +66,24 @@ const AddPay = () => {
     if (inputValues.PaymentId.length < 4) {
       errors.PaymentId = "PaymentId is too short";
     }
+    //string field validation
+   
+    if (/^[0-9]/.test(inputValues.PaymentId)) {
+      errors.PaymentId = "PaymentId can't start with a number";
+    }
     if (inputValues.Date.length < 1) {
       errors.Date = "Date is too short";
     }
+    //number field validation
     if (inputValues.Payment.length < 1) {
       errors.Payment = "Payment is too short";
     }
+    if (isNaN(inputValues.Payment) || inputValues.Payment < 0) {
+      errors.Payment = "Payment must be a positive number";
+    }
+if (/[^0-9.]/.test(inputValues.Payment)) {
+  errors.Payment = "Payment must be a number";
+}
 
     return errors;
   };
@@ -108,14 +120,14 @@ const AddPay = () => {
           console.error('Error adding payment: ', error);
         });
     } else {
-      console.log('Form not submitted due to validation errors...');
+      console.log('Form not submitted ');
     }
   }
 
   return (
     <>
       <div className="col">
-        <Header dashboard={"Payment history Management System"} />
+        <Header dashboard={"Payment history Management"} />
       </div>
       <div className="container-fluid">
         <div className="row flex-nowrap">
@@ -140,6 +152,7 @@ const AddPay = () => {
                       placeholder="Enter OrderNo of the post"
                       value={state.OrderNo}
                       onChange={handleChange}
+                      disabled
                     />
                     {errors.OrderNo && (
                       <div className="text-danger mt-2">

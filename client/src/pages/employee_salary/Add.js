@@ -19,17 +19,20 @@ const Add = () => {
 
   const validateValues = (inputValues) => {
     let errors = {};
-    if (isNaN(inputValues.EmpId) || inputValues.EmpId.length < 3) {
-      errors.EmpId = "Employee ID must be a valid number";
+    //Number Validations
+    if (isNaN(inputValues.EmpId) || inputValues.EmpId.length < 3 || inputValues.EmpId < 0) {
+      errors.EmpId = "Employee ID must be a valid positive number";
     }
     if (inputValues.EmpName.length < 4) {
       errors.EmpName = "Employee Name is too short";
     }
+    //String Validations
     if (typeof inputValues.EmpName !== 'string') {
       errors.EmpName = "Employee Name must be a string";
     }
-    if (isNaN(inputValues.BasicSalary) || inputValues.BasicSalary.length < 1) {
-      errors.BasicSalary = "Basic Salary must be a valid number";
+    //Number Validations
+    if (isNaN(inputValues.BasicSalary) || inputValues.BasicSalary.length < 1 || inputValues.BasicSalary < 0) {
+      errors.BasicSalary = "Basic Salary must be a valid positive number";
     }
     return errors;
   };
@@ -79,11 +82,11 @@ const Add = () => {
       setSubmitting(true);
       axios.post("http://localhost:8000/salary/add", state)
         .then((res) => {
-          alert("Item added to inventory");
+          alert("Salary added successfully");
           navigate(-1);
         })
         .catch((error) => {
-          console.error("Error adding item:", error);
+          console.error("Error adding salary:", error);
         });
     }
   };

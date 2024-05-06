@@ -27,7 +27,7 @@ useEffect(() => {
   return (
     <>
     <div class="col">
-        <Header dashboard={"Distributor Management System"}  setSearch={setSearch}/>
+        <Header dashboard={"Distributor Management "}  setSearch={setSearch}/>
     </div>
     <div class="container-fluid">
     <div class="row flex-nowrap">

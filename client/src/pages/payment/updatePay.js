@@ -23,8 +23,12 @@ export const UpdatePay = () => {
       if (inputValues.OrderNo.length<3) {
         errors.OrderNo="orderNo is too short";
       }
+      //string validation
        if (inputValues.PaymentId.length<1) {
           errors.PaymentId="PaymentId is too short";
+        }
+        if (/^[0-9]/.test(inputValues.PaymentId)) {
+          errors.PaymentId = "PaymentId can't start with a number";
         }
         if (inputValues.Date.length<1) {
           errors.Date="Date is too short";
@@ -32,9 +36,15 @@ export const UpdatePay = () => {
         if (inputValues.CustomerName.length<1) {
           errors.CustomerName="CustomerName is too short";
         }
-        if (inputValues.Payment.length<1) {
-          errors.Payment="Payment is too short";
+        if (inputValues.Payment.length < 1) {
+          errors.Payment = "Payment is too short";
         }
+        if (isNaN(inputValues.Payment) || inputValues.Payment < 0) {
+          errors.Payment = "Payment must be a positive number";
+        }
+      if (/[^0-9.]/.test(inputValues.Payment)) {
+        errors.Payment = "Payment must be a number";
+      }
         return errors;
     };
       const handleChange = (e) =>{
@@ -95,7 +105,7 @@ export const UpdatePay = () => {
   return (
     <>
     <div class="col">
-        <Header dashboard={"Payment history Management System"} />
+        <Header dashboard={"Payment history Management"} />
     </div>
     <div class="container-fluid">
       <div class="row flex-nowrap">
@@ -103,7 +113,7 @@ export const UpdatePay = () => {
             <div class="mt-5 mb-5 ">
                 <h4>
                     <span class="badge text-bg-secondary">
-                    Payment Add 
+                    Payment update 
                     </span>
                 </h4>
             </div>
@@ -119,6 +129,7 @@ export const UpdatePay = () => {
         placeholder="Enter OrderNo of the post"
         value={state.OrderNo}
         onChange={handleChange}
+        disabled
         />
         {errors.OrderNo && (
           <div class="text-danger mt-2">
@@ -135,10 +146,11 @@ export const UpdatePay = () => {
         value={state.PaymentId}
         onChange={handleChange}
         />
-        {errors.PaymentId && (
-          <div class="text-danger mt-2">
-            PaymentId should have 4 characters
-       </div> )}
+       {errors.PaymentId && (
+                      <div className="text-danger mt-2">
+                        {errors.PaymentId}
+                      </div>
+                    )}
     </div>
   </div>
   <div class="row mt-4">
@@ -168,6 +180,7 @@ export const UpdatePay = () => {
         placeholder="Enter Customer name of the post"
         value={state.CustomerName}
         onChange={handleChange}
+        disabled
         />
         {errors.CustomerName && (
           <div class="text-danger mt-2">
@@ -184,10 +197,11 @@ export const UpdatePay = () => {
         value={state.Payment}
         onChange={handleChange}
         />
-         {errors.Payment && (
-          <div class="text-danger mt-2">
-            Payment can't be null
-       </div> )}
+        {errors.Payment && (
+                      <div className="text-danger mt-2">
+                        {errors.Payment}
+                      </div>
+                    )}
     </div>
     
     <button className='btn mt-5' style={{backgroundColor: "#c1b688 "}} type='submit' onClick={handleSubmit}>
