@@ -65,7 +65,7 @@ const downloadPDF = () => {
   return (
     <>
     <div class="col">
-        <Header dashboard={"Employee Management System"} />
+        <Header dashboard={"Employee Management"} />
     </div>
     <div class="container-fluid">
       <div class="row flex-nowrap">
